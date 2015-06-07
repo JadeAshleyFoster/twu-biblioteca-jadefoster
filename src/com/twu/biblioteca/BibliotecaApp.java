@@ -8,10 +8,33 @@ public class BibliotecaApp {
     }
 
     public void go() {
-        System.out.println(getWelcome());
+        printWelcome();
     }
 
-    public String getWelcome() {
-        return "Welcome to Biblioteca!";
+    private void printWelcome() {
+        System.out.println(getWelcomeMessage());
+        printTableLine();
+        System.out.println(getHeaders());
+        printTableLine();
+        System.out.println(getListOfBooks());
+        printTableLine();
+    }
+
+    public String getWelcomeMessage() {
+        return "Welcome to Biblioteca!\n";
+    }
+
+    public String getListOfBooks() {
+        return "# Perdido Street Station  #\n# China Mieville          #\n# 2000                    #\n" +
+               "# Snow Crash              #\n# Neal Stephenson         #\n# 1992                    #\n" +
+                "# The Nature of Code      #\n# Daniel Shiffman         #\n# 2012                    #";
+    }
+
+    public String getHeaders() {
+        return "#          TITLE          #          AUTHOR         #      YEAR PUBLISHED     #";
+    }
+
+    private void printTableLine() {
+        System.out.println("###############################################################################");
     }
 }
