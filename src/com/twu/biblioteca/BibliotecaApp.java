@@ -27,12 +27,22 @@ public class BibliotecaApp {
         while (!quit) {
             String input = scanner.nextLine().toLowerCase();
 
-            Interpreter interpreter = new Interpreter();
-            String processedInput = interpreter.processInput(input, this);
+            Interpreter interpreter = new Interpreter(this);
+            String processedInput = interpreter.processMenuInput(input);
             if (processedInput.equals("quit")) {
                 quit = true;
+            } else if (processedInput.equals("check out a book")) {
+                input = scanner.nextLine().toLowerCase();
+                Book bookChosen = interpreter.processBookInput(input);
+                if (bookChosen == null) {
+                    ui.printInvalidBookMessage();
+                } else {
+                    ui.printBookCheckedOutMessage(bookChosen);
+                    bookList.remove(bookChosen);
+                }
             }
 
+            System.out.println();
             ui.printMainMenu();
         }
     }

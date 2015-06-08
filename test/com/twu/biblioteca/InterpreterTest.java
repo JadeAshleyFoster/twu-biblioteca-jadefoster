@@ -23,25 +23,37 @@ public class InterpreterTest {
         testBookList.add( new Book("The Nature of Code", "Daniel Shiffman", 2012));
         bibTest.setBookList(testBookList);
 
-        testInterpreter = new Interpreter();
+        testInterpreter = new Interpreter(bibTest);
     }
 
     @Test
     public void testUserInputListBooks() {
-        String output = testInterpreter.processInput("list books", bibTest);
+        String output = testInterpreter.processMenuInput("list books");
         assertEquals("list books", output);
     }
 
     @Test
     public void testInvalidMenuChoice() {
-        String output = testInterpreter.processInput("gobbledigoop", bibTest);
+        String output = testInterpreter.processMenuInput("gobbledigoop");
         assertEquals("invalid option", output);
     }
 
     @Test
     public void testQuit() {
-        String output = testInterpreter.processInput("quit", bibTest);
+        String output = testInterpreter.processMenuInput("quit");
         assertEquals("quit", output);
+    }
+
+    @Test
+    public void testCheckOutBookOption() {
+        String output = testInterpreter.processMenuInput("check out a book");
+        assertEquals("check out a book", output);
+    }
+
+    @Test
+    public void testCheckOutABook() {
+        Book book = testInterpreter.processBookInput("perdido street station");
+        assertEquals(testBookList.get(0), book);
     }
 
 }

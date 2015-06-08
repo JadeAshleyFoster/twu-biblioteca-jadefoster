@@ -35,11 +35,23 @@ public class ConsoleUI {
     }
 
     public String getMainMenu() {
-       return "Main Menu:\tList Books\tQuit";
+       return "Main Menu:\tList Books\t-\tCheck Out A Book\t-\tQuit";
     }
 
     public String getPrompt() {
         return "Please choose an option ...> ";
+    }
+
+    public void printQueryWhichBookToCheckOut() {
+        System.out.println("Which book would you like to check out?");
+    }
+
+    public void printInvalidBookMessage() {
+        System.out.println("Sorry that book is not available.");
+    }
+
+    public void printBookCheckedOutMessage(Book book) {
+        System.out.println("You have checked out " + book.getTitle() + ", " + book.getAuthor() + ". (" +book.getYearPublished() + ").");
     }
 
     public String getWelcomeMessage() {
