@@ -58,6 +58,10 @@ public class BibliotecaApp {
         this.bookList = bookList;
     }
 
+    public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
+        this.checkedOutBooks = checkedOutBooks;
+    }
+
     public ArrayList<Book> getBookList() {
         return bookList;
     }
