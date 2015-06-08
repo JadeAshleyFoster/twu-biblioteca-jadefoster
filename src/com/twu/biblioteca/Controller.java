@@ -50,7 +50,7 @@ public class Controller {
         return null;
     }
 
-    public void checkOutABook(String input) {
+    public Book checkOutABook(String input) {
         Book bookChosen = checkBookIsInList(input, bib.getBookList());
         if (bookChosen == null) {
             ui.printInvalidBookMessage();
@@ -58,9 +58,10 @@ public class Controller {
             ui.printBookCheckedOutMessage(bookChosen);
             bib.checkOutBook(bookChosen);
         }
+        return bookChosen;
     }
 
-    public void returnABook(String input) {
+    public Book returnABook(String input) {
         Book bookReturned = checkBookIsInList(input, bib.getCheckedOutBooks());
         if (bookReturned == null) {
             ui.printInvalidBookToReturnMessage();
@@ -68,6 +69,7 @@ public class Controller {
             ui.printBookReturnedMessage(bookReturned);
             bib.returnBook(bookReturned);
         }
+        return bookReturned;
     }
 
 }
