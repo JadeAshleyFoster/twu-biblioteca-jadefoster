@@ -16,8 +16,7 @@ public class Controller {
 
     public String processUserInput() {
         String input = scanner.nextLine().toLowerCase();
-        String processMenuInput = processMenuInput(input);
-        return processMenuInput;
+        return processMenuInput(input);
     }
 
     public String processMenuInput(String input) {

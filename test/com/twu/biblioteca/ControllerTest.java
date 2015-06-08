@@ -1,6 +1,5 @@
 package com.twu.biblioteca;
 
-import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -55,7 +54,6 @@ public class ControllerTest {
         testController.checkOutABook(input);
         Book bookToCheckOut = new Book("Snow Crash", "Neal Stephenson", 1992);
         assertFalse(bibTest.getBookList().contains(bookToCheckOut));
-        assertTrue(bibTest.getCheckedOutBooks().contains(bookToCheckOut));
     }
 
     @Test
@@ -73,7 +71,6 @@ public class ControllerTest {
         testController.returnABook(input);
         Book bookToReturn = new Book("The Nature of Code", "Daniel Shiffman", 2012);
         assertFalse(bibTest.getCheckedOutBooks().contains(bookToReturn));
-        assertTrue(bibTest.getBookList().contains(bookToReturn));
     }
 
     @Test
