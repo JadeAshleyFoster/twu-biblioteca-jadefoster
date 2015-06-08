@@ -26,10 +26,6 @@ public class ConsoleUI {
         System.out.println();
     }
 
-    public void printPrompt() {
-        System.out.println(getPrompt());
-    }
-
     public void printInvalidMenuOptionMessage() {
         System.out.println("Sorry that is not a valid option. Please choose another.\n");
     }
@@ -99,7 +95,7 @@ public class ConsoleUI {
     }
 
     private String formatDetailLength(String detail) {
-        return detail += getJustifier(MAX_DETAIL_LENGTH - detail.length());
+        return detail + getJustifier(MAX_DETAIL_LENGTH - detail.length());
     }
 
     private String getJustifier(int justifierLength) {
@@ -111,7 +107,7 @@ public class ConsoleUI {
     }
 
     private String shortenDetail(String detail) {
-        return detail = detail.substring(0, MAX_DETAIL_LENGTH - 3) + "...";
+        return detail.substring(0, MAX_DETAIL_LENGTH - 3) + "...";
     }
 
     private boolean detailIsTooLong(String detail) {

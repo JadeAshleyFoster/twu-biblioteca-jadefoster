@@ -2,11 +2,11 @@ package com.twu.biblioteca;
 
 import java.util.ArrayList;
 
-public class Interpreter {
+public class Controller {
     ConsoleUI ui;
     BibliotecaApp bib;
 
-    public Interpreter(BibliotecaApp bib) {
+    public Controller(BibliotecaApp bib) {
         ui = new ConsoleUI();
         this.bib = bib;
     }
@@ -16,6 +16,7 @@ public class Interpreter {
             ui.printBookList(bib.getBookList());
             return input;
         } else if (input.equals("quit")) {
+            ui.printGoodBye();
             return input;
         } else if (input.equals("check out a book")) {
             ui.printQueryWhichBookToCheckOut();

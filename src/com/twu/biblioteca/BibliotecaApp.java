@@ -5,6 +5,10 @@ import java.util.Scanner;
 
 public class BibliotecaApp {
     ArrayList<Book> bookList, checkedOutBooks;
+    Scanner scanner;
+    Controller controller;
+    ConsoleUI ui;
+
 
     public static void main(String[] args) {
         BibliotecaApp bib = new BibliotecaApp();
@@ -12,11 +16,7 @@ public class BibliotecaApp {
     }
 
     public void go() {
-        bookList = new ArrayList<Book>();
-        bookList.add(new Book("Perdido Street Station", "China Mieville", 2000));
-        bookList.add(new Book("Snow Crash", "Neal Stephenson", 1992));
-        bookList.add(new Book("The Nature of Code", "Daniel Shiffman", 2012));
-        setBookList(bookList);
+        createBookList();
 
         checkedOutBooks = new ArrayList<Book>();
 
@@ -25,40 +25,58 @@ public class BibliotecaApp {
 
         Scanner scanner = new Scanner(System.in);
 
+        Controller controller = new Controller(this);
+
         boolean quit = false;
         while (!quit) {
             String input = scanner.nextLine().toLowerCase();
 
-            Interpreter interpreter = new Interpreter(this);
-            String processedInput = interpreter.processMenuInput(input);
+            String processedInput = controller.processMenuInput(input);
             if (processedInput.equals("quit")) {
-                ui.printGoodBye();
                 quit = true;
                 break;
             } else if (processedInput.equals("check out a book")) {
-                input = scanner.nextLine().toLowerCase();
-                Book bookChosen = interpreter.processBookInput(input, bookList);
-                if (bookChosen == null) {
-                    ui.printInvalidBookMessage();
-                } else {
-                    ui.printBookCheckedOutMessage(bookChosen);
-                    bookList.remove(bookChosen);
-                    checkedOutBooks.add(bookChosen);
-                }
+                checkOutABook();
             } else if(processedInput.equals("return a book")) {
-                input = scanner.nextLine().toLowerCase();
-                Book bookReturned = interpreter.processBookInput(input, checkedOutBooks);
-                if (bookReturned == null) {
-                    ui.printInvalidBookToReturnMessage();
-                } else {
-                    ui.printBookReturnedMessage(bookReturned);
-                    bookList.add(bookReturned);
-                    checkedOutBooks.remove(bookReturned);
-                }
+                returnABook();
             }
 
             System.out.println();
             ui.printMainMenu();
+        }
+
+        scanner.close();
+    }
+
+    private void createBookList() {
+        bookList = new ArrayList<Book>();
+        bookList.add(new Book("Perdido Street Station", "China Mieville", 2000));
+        bookList.add(new Book("Snow Crash", "Neal Stephenson", 1992));
+        bookList.add(new Book("The Nature of Code", "Daniel Shiffman", 2012));
+        setBookList(bookList);
+    }
+
+    private void checkOutABook() {
+        String input = scanner.nextLine().toLowerCase();
+        Book bookChosen = controller.processBookInput(input, bookList);
+        if (bookChosen == null) {
+            ui.printInvalidBookMessage();
+        } else {
+            ui.printBookCheckedOutMessage(bookChosen);
+            bookList.remove(bookChosen);
+            checkedOutBooks.add(bookChosen);
+        }
+    }
+
+    private void returnABook() {
+        String input = scanner.nextLine().toLowerCase();
+        Book bookReturned = controller.processBookInput(input, checkedOutBooks);
+        if (bookReturned == null) {
+            ui.printInvalidBookToReturnMessage();
+        } else {
+            ui.printBookReturnedMessage(bookReturned);
+            bookList.add(bookReturned);
+            checkedOutBooks.remove(bookReturned);
         }
     }
 
