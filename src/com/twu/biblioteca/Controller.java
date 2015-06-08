@@ -11,6 +11,13 @@ public class Controller {
     public Controller(BibliotecaApp bib) {
         ui = new ConsoleUI();
         this.bib = bib;
+        scanner = new Scanner(System.in);
+    }
+
+    public String processUserInput() {
+        String input = scanner.nextLine().toLowerCase();
+        String processMenuInput = processMenuInput(input);
+        return processMenuInput;
     }
 
     public String processMenuInput(String input) {
@@ -19,6 +26,7 @@ public class Controller {
             return input;
         } else if (input.equals("quit")) {
             ui.printGoodBye();
+            scanner.close();
             return input;
         } else if (input.equals("check out a book")) {
             ui.printQueryWhichBookToCheckOut();

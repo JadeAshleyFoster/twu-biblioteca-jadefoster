@@ -1,13 +1,9 @@
 package com.twu.biblioteca;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class BibliotecaApp {
     ArrayList<Book> bookList, checkedOutBooks;
-    Scanner scanner;
-    Controller controller;
-    ConsoleUI ui;
 
 
     public static void main(String[] args) {
@@ -23,25 +19,21 @@ public class BibliotecaApp {
         ConsoleUI ui = new ConsoleUI();
         ui.printWelcome();
 
-        Scanner scanner = new Scanner(System.in);
-
         Controller controller = new Controller(this);
 
         boolean quit = false;
         while (!quit) {
-            String input = scanner.nextLine().toLowerCase();
 
-            String processedInput = controller.processMenuInput(input);
+            String processedInput = controller.processUserInput();
             if (processedInput.equals("quit")) {
                 quit = true;
-                break;
+            } else {
+                System.out.println();
+                ui.printMainMenu();
             }
-
-            System.out.println();
-            ui.printMainMenu();
         }
 
-        scanner.close();
+
     }
 
     private void createBookList() {
