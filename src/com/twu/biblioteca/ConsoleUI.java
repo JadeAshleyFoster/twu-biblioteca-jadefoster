@@ -22,8 +22,16 @@ public class ConsoleUI {
         System.out.println();
     }
 
+    public void printPrompt() {
+        System.out.println(getPrompt());
+    }
+
+    public void printInvalidMenuOptionMessage() {
+        System.out.println("Sorry that is not a valid option. Please choose another.\n");
+    }
+
     public String getMainMenu() {
-        return "Main Menu: List Books\n";
+       return "Main Menu:\tList Books";
     }
 
     public String getPrompt() {

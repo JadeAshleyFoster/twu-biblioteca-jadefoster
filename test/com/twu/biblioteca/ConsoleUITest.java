@@ -47,7 +47,7 @@ public class ConsoleUITest {
     @Test
     public void testMainMenuList() {
         String output = testUI.getMainMenu();
-        assertEquals("Main Menu: List Books", output);
+        assertEquals("Main Menu:\tList Books", output);
     }
 
     @Test

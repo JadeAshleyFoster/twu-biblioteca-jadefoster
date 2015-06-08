@@ -24,15 +24,16 @@ public class BibliotecaApp {
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine().toLowerCase();
 
-        if (input.equals("list books")) {
-            ui.printBookList(bookList);
+        Interpreter interpreter = new Interpreter();
+        interpreter.processInput(input, this);
         }
-
-
-    }
 
     public void setBookList(ArrayList<Book> bookList) {
         this.bookList = bookList;
+    }
+
+    public ArrayList<Book> getBookList() {
+        return bookList;
     }
 
 }
