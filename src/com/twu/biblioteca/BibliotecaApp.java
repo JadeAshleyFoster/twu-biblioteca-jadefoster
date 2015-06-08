@@ -35,10 +35,6 @@ public class BibliotecaApp {
             if (processedInput.equals("quit")) {
                 quit = true;
                 break;
-            } else if (processedInput.equals("check out a book")) {
-                checkOutABook();
-            } else if(processedInput.equals("return a book")) {
-                returnABook();
             }
 
             System.out.println();
@@ -56,28 +52,14 @@ public class BibliotecaApp {
         setBookList(bookList);
     }
 
-    private void checkOutABook() {
-        String input = scanner.nextLine().toLowerCase();
-        Book bookChosen = controller.processBookInput(input, bookList);
-        if (bookChosen == null) {
-            ui.printInvalidBookMessage();
-        } else {
-            ui.printBookCheckedOutMessage(bookChosen);
-            bookList.remove(bookChosen);
-            checkedOutBooks.add(bookChosen);
-        }
+    public void checkOutBook(Book book) {
+        bookList.remove(book);
+        checkedOutBooks.add(book);
     }
 
-    private void returnABook() {
-        String input = scanner.nextLine().toLowerCase();
-        Book bookReturned = controller.processBookInput(input, checkedOutBooks);
-        if (bookReturned == null) {
-            ui.printInvalidBookToReturnMessage();
-        } else {
-            ui.printBookReturnedMessage(bookReturned);
-            bookList.add(bookReturned);
-            checkedOutBooks.remove(bookReturned);
-        }
+    public void returnBook(Book book) {
+        checkedOutBooks.remove(book);
+        bookList.remove(book);
     }
 
     public void setBookList(ArrayList<Book> bookList) {
@@ -86,6 +68,10 @@ public class BibliotecaApp {
 
     public ArrayList<Book> getBookList() {
         return bookList;
+    }
+
+    public ArrayList<Book> getCheckedOutBooks() {
+        return checkedOutBooks;
     }
 
 }

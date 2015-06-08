@@ -1,11 +1,14 @@
 package com.twu.biblioteca;
 
+import junit.framework.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 public class ControllerTest {
     BibliotecaApp bibTest;
@@ -52,8 +55,17 @@ public class ControllerTest {
 
     @Test
     public void testCheckOutABook() {
-        Book book = testController.processBookInput("perdido street station", testBookList);
-        assertEquals(testBookList.get(0), book);
+        String bookToCheckOut = "perdido street station";
+        testController.checkOutABook(bookToCheckOut);
+        assertFalse(bibTest.getBookList().contains(bookToCheckOut));
+        assertTrue(bibTest.getCheckedOutBooks().contains(bookToCheckOut));
+    }
+
+    @Test
+    public void testInvalidCheckOutBook() {
+        String invalidBook = "2+2=5";
+        testController.checkOutABook(invalidBook);
+        assertFalse(bibTest.getCheckedOutBooks().contains(invalidBook));
     }
 
     @Test
@@ -61,5 +73,22 @@ public class ControllerTest {
         String output = testController.processMenuInput("return a book");
         assertEquals("return a book", output);
     }
+
+    @Test
+    public void testReturnABook() {
+        String bookToReturn = "the nature of code";
+        testController.checkOutABook(bookToReturn);
+        testController.returnABook(bookToReturn);
+        assertFalse(bibTest.getCheckedOutBooks().contains(bookToReturn));
+        assertTrue(bibTest.getBookList().contains(bookToReturn));
+    }
+
+    @Test
+    public void testInvalidReturnBook() {
+        String invalidBook = "finkleburger";
+        testController.returnABook(invalidBook);
+        assertFalse(bibTest.getBookList().contains(invalidBook));
+    }
+
 
 }
