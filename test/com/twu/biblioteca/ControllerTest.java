@@ -21,8 +21,8 @@ public class ControllerTest {
 
         ArrayList<Book> testBookList = new ArrayList<Book>();
         testBookList.add(new Book("Perdido Street Station", "China Mieville", 2000));
-        testBookList.add( new Book("Snow Crash", "Neal Stephenson", 1992));
-        testBookList.add( new Book("The Nature of Code", "Daniel Shiffman", 2012));
+        testBookList.add(new Book("Snow Crash", "Neal Stephenson", 1992));
+        testBookList.add(new Book("The Nature of Code", "Daniel Shiffman", 2012));
         bibTest.setBookList(testBookList);
 
         bibTest.setCheckedOutBooks(new ArrayList<Book>());
@@ -51,33 +51,37 @@ public class ControllerTest {
 
     @Test
     public void testCheckOutABook() {
-        String bookToCheckOut = "snow crash";
-        testController.checkOutABook(bookToCheckOut);
+        String input = "snow crash";
+        testController.checkOutABook(input);
+        Book bookToCheckOut = new Book("Snow Crash", "Neal Stephenson", 1992);
         assertFalse(bibTest.getBookList().contains(bookToCheckOut));
         assertTrue(bibTest.getCheckedOutBooks().contains(bookToCheckOut));
     }
 
     @Test
     public void testInvalidCheckOutBook() {
-        String invalidBook = "2+2=5";
-        testController.checkOutABook(invalidBook);
-        assertFalse(bibTest.getCheckedOutBooks().contains(invalidBook));
+        String input = "2+2=5";
+        testController.checkOutABook(input);
+        Book invalidBookToCheckOut = new Book("2+2=5", "Rubbish Mathus", 1902);
+        assertFalse(bibTest.getCheckedOutBooks().contains(invalidBookToCheckOut));
     }
 
     @Test
     public void testReturnABook() {
-        String bookToReturn = "the nature of code";
-        testController.checkOutABook(bookToReturn);
-        testController.returnABook(bookToReturn);
+        String input = "the nature of code";
+        testController.checkOutABook(input);
+        testController.returnABook(input);
+        Book bookToReturn = new Book("The Nature of Code", "Daniel Shiffman", 2012);
         assertFalse(bibTest.getCheckedOutBooks().contains(bookToReturn));
         assertTrue(bibTest.getBookList().contains(bookToReturn));
     }
 
     @Test
     public void testInvalidReturnBook() {
-        String invalidBook = "finkleburger";
-        testController.returnABook(invalidBook);
-        assertFalse(bibTest.getBookList().contains(invalidBook));
+        String input = "finkleburger";
+        testController.returnABook(input);
+        Book invalidBookToReturn = new Book("finkleburger", "Gin Lala", 3333);
+        assertFalse(bibTest.getBookList().contains(invalidBookToReturn));
     }
 
 

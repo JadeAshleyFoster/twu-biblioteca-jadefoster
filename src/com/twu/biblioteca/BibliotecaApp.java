@@ -33,7 +33,6 @@ public class BibliotecaApp {
             }
         }
 
-
     }
 
     private void createBookList() {
