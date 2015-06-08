@@ -35,23 +35,41 @@ public class ConsoleUI {
     }
 
     public String getMainMenu() {
-       return "Main Menu:\tList Books\t-\tCheck Out A Book\t-\tQuit";
+       return "Main Menu:\tList Books\t-\tCheck Out A Book\t-\tReturn A Book\t-\tQuit";
     }
 
     public String getPrompt() {
         return "Please choose an option ...> ";
     }
 
+    public void printGoodBye() {
+        System.out.println("Thank you for using Biblioteca, goodbye.");
+    }
+
     public void printQueryWhichBookToCheckOut() {
         System.out.println("Which book would you like to check out?");
     }
 
+    public void printQueryWhichBookToReturn() {
+        System.out.println("Which book would you like to return?");
+    }
+
     public void printInvalidBookMessage() {
-        System.out.println("Sorry that book is not available.");
+        System.out.println("That book is not available.");
+    }
+
+    public void printBookReturnedMessage(Book book) {
+        System.out.println("You have returned " + book.getTitle() + ", " + book.getAuthor() + ". (" +book.getYearPublished() + ").");
+        System.out.println("Thank you for returning the book.");
+    }
+
+    public void printInvalidBookToReturnMessage() {
+        System.out.println("That is not a valid book to return.");
     }
 
     public void printBookCheckedOutMessage(Book book) {
         System.out.println("You have checked out " + book.getTitle() + ", " + book.getAuthor() + ". (" +book.getYearPublished() + ").");
+        System.out.println("Thank you! Enjoy the book.");
     }
 
     public String getWelcomeMessage() {

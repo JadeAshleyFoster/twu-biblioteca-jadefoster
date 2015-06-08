@@ -1,5 +1,7 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
+
 public class Interpreter {
     ConsoleUI ui;
     BibliotecaApp bib;
@@ -18,14 +20,17 @@ public class Interpreter {
         } else if (input.equals("check out a book")) {
             ui.printQueryWhichBookToCheckOut();
             return input;
+        } else if (input.equals("return a book")) {
+            ui.printQueryWhichBookToReturn();
+            return input;
         } else {
             ui.printInvalidMenuOptionMessage();
             return "invalid option";
         }
     }
 
-    public Book processBookInput(String input) {
-        for (Book book:bib.getBookList()) {
+    public Book processBookInput(String input, ArrayList<Book> bookList) {
+        for (Book book:bookList) {
             if (book.getTitle().toLowerCase().equals(input)) {
                 return book;
             }

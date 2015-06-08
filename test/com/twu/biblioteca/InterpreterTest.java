@@ -45,15 +45,21 @@ public class InterpreterTest {
     }
 
     @Test
-    public void testCheckOutBookOption() {
+    public void testCheckOutBookMenuOption() {
         String output = testInterpreter.processMenuInput("check out a book");
         assertEquals("check out a book", output);
     }
 
     @Test
     public void testCheckOutABook() {
-        Book book = testInterpreter.processBookInput("perdido street station");
+        Book book = testInterpreter.processBookInput("perdido street station", testBookList);
         assertEquals(testBookList.get(0), book);
+    }
+
+    @Test
+    public void testReturnBookMenuOption() {
+        String output = testInterpreter.processMenuInput("return a book");
+        assertEquals("return a book", output);
     }
 
 }

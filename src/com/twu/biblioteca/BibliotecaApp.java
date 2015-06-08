@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BibliotecaApp {
-    ArrayList<Book> bookList;
+    ArrayList<Book> bookList, checkedOutBooks;
 
     public static void main(String[] args) {
         BibliotecaApp bib = new BibliotecaApp();
@@ -18,6 +18,8 @@ public class BibliotecaApp {
         bookList.add(new Book("The Nature of Code", "Daniel Shiffman", 2012));
         setBookList(bookList);
 
+        checkedOutBooks = new ArrayList<Book>();
+
         ConsoleUI ui = new ConsoleUI();
         ui.printWelcome();
 
@@ -30,15 +32,28 @@ public class BibliotecaApp {
             Interpreter interpreter = new Interpreter(this);
             String processedInput = interpreter.processMenuInput(input);
             if (processedInput.equals("quit")) {
+                ui.printGoodBye();
                 quit = true;
+                break;
             } else if (processedInput.equals("check out a book")) {
                 input = scanner.nextLine().toLowerCase();
-                Book bookChosen = interpreter.processBookInput(input);
+                Book bookChosen = interpreter.processBookInput(input, bookList);
                 if (bookChosen == null) {
                     ui.printInvalidBookMessage();
                 } else {
                     ui.printBookCheckedOutMessage(bookChosen);
                     bookList.remove(bookChosen);
+                    checkedOutBooks.add(bookChosen);
+                }
+            } else if(processedInput.equals("return a book")) {
+                input = scanner.nextLine().toLowerCase();
+                Book bookReturned = interpreter.processBookInput(input, checkedOutBooks);
+                if (bookReturned == null) {
+                    ui.printInvalidBookToReturnMessage();
+                } else {
+                    ui.printBookReturnedMessage(bookReturned);
+                    bookList.add(bookReturned);
+                    checkedOutBooks.remove(bookReturned);
                 }
             }
 
