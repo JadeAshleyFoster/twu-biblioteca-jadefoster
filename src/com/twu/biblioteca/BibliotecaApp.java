@@ -51,7 +51,7 @@ public class BibliotecaApp {
 
     public void returnBook(Book book) {
         checkedOutBooks.remove(book);
-        bookList.remove(book);
+        bookList.add(book);
     }
 
     public void setBookList(ArrayList<Book> bookList) {

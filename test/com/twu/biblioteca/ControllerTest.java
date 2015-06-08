@@ -12,7 +12,6 @@ import static org.junit.Assert.assertFalse;
 
 public class ControllerTest {
     BibliotecaApp bibTest;
-    ArrayList<Book> testBookList;
     Controller testController;
 
 
@@ -20,7 +19,7 @@ public class ControllerTest {
     public void setUp() {
         bibTest = new BibliotecaApp();
 
-        testBookList = new ArrayList<Book>();
+        ArrayList<Book> testBookList = new ArrayList<Book>();
         testBookList.add(new Book("Perdido Street Station", "China Mieville", 2000));
         testBookList.add( new Book("Snow Crash", "Neal Stephenson", 1992));
         testBookList.add( new Book("The Nature of Code", "Daniel Shiffman", 2012));
