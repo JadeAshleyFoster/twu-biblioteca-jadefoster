@@ -13,9 +13,10 @@ public class Interpreter {
         if (input.equals("list books")) {
             ui.printBookList(bib.getBookList());
             return "list books";
+        } else if (input.equals("quit")) {
+            return "quit";
         } else {
             ui.printInvalidMenuOptionMessage();
-            ui.printPrompt();
             return "invalid option";
         }
     }

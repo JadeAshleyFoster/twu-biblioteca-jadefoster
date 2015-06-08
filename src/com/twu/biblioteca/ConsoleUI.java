@@ -6,6 +6,10 @@ public class ConsoleUI {
 
     public void printWelcome() {
         System.out.println(getWelcomeMessage());
+        printMainMenu();
+    }
+
+    public void printMainMenu() {
         System.out.println(getMainMenu());
         System.out.println(getPrompt());
     }
@@ -31,7 +35,7 @@ public class ConsoleUI {
     }
 
     public String getMainMenu() {
-       return "Main Menu:\tList Books";
+       return "Main Menu:\tList Books\tQuit";
     }
 
     public String getPrompt() {

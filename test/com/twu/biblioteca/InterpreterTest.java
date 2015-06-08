@@ -38,4 +38,10 @@ public class InterpreterTest {
         assertEquals("invalid option", output);
     }
 
+    @Test
+    public void testQuit() {
+        String output = testInterpreter.processInput("quit", bibTest);
+        assertEquals("quit", output);
+    }
+
 }
