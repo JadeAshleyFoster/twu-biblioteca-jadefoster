@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class BibliotecaApp {
     ArrayList<Book> bookList, checkedOutBooks;
+    ArrayList<Movie> movieList;
 
 
     public static void main(String[] args) {
@@ -13,13 +14,12 @@ public class BibliotecaApp {
 
     public void go() {
         createBookList();
-
-        checkedOutBooks = new ArrayList<Book>();
-
-        ConsoleUI ui = new ConsoleUI();
-        ui.printWelcome();
+        createMovieList();
 
         Controller controller = new Controller(this);
+
+        ConsoleUI ui = new ConsoleUI();
+        ui.printWelcome(controller.getMenuOptions());
 
         boolean quit = false;
         while (!quit) {
@@ -29,18 +29,26 @@ public class BibliotecaApp {
                 quit = true;
             } else {
                 System.out.println();
-                ui.printMainMenu();
+                ui.printMainMenu(controller.getMenuOptions());
             }
         }
 
     }
 
-    private void createBookList() {
+    public void createMovieList() {
+        movieList = new ArrayList<Movie>();
+        movieList.add(new Movie("Akira", "1998", "Katsuhiro Otomo", "8"));
+        movieList.add(new Movie("Planet Terror", "2007", "Robert Rodriguez", "7"));
+        movieList.add(new Movie("Interstellar", "2014", "Christopher Nolan", "8"));
+    }
+
+
+    public void createBookList() {
         bookList = new ArrayList<Book>();
-        bookList.add(new Book("Perdido Street Station", "China Mieville", 2000));
-        bookList.add(new Book("Snow Crash", "Neal Stephenson", 1992));
-        bookList.add(new Book("The Nature of Code", "Daniel Shiffman", 2012));
-        setBookList(bookList);
+        bookList.add(new Book("Perdido Street Station", "China Mieville", "2000"));
+        bookList.add(new Book("Snow Crash", "Neal Stephenson", "1992"));
+        bookList.add(new Book("The Nature of Code", "Daniel Shiffman", "2012"));
+        checkedOutBooks = new ArrayList<Book>();
     }
 
     public void checkOutBook(Book book) {
@@ -53,16 +61,12 @@ public class BibliotecaApp {
         bookList.add(book);
     }
 
-    public void setBookList(ArrayList<Book> bookList) {
-        this.bookList = bookList;
-    }
-
-    public void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
-        this.checkedOutBooks = checkedOutBooks;
-    }
-
     public ArrayList<Book> getBookList() {
         return bookList;
+    }
+
+    public ArrayList<Movie> getMovieList() {
+        return movieList;
     }
 
     public ArrayList<Book> getCheckedOutBooks() {

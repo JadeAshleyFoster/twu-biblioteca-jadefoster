@@ -1,9 +1,8 @@
 package com.twu.biblioteca;
 
+import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.ArrayList;
 
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
@@ -17,15 +16,8 @@ public class ControllerTest {
     @Before
     public void setUp() {
         bibTest = new BibliotecaApp();
-
-        ArrayList<Book> testBookList = new ArrayList<Book>();
-        testBookList.add(new Book("Perdido Street Station", "China Mieville", 2000));
-        testBookList.add(new Book("Snow Crash", "Neal Stephenson", 1992));
-        testBookList.add(new Book("The Nature of Code", "Daniel Shiffman", 2012));
-        bibTest.setBookList(testBookList);
-
-        bibTest.setCheckedOutBooks(new ArrayList<Book>());
-
+        bibTest.createBookList();
+        bibTest.createMovieList();
         testController = new Controller(bibTest);
     }
 
@@ -33,6 +25,12 @@ public class ControllerTest {
     public void testUserInputListBooks() {
         String output = testController.processMenuInput("list books");
         assertEquals("list books", output);
+    }
+
+    @Test
+    public void testUserInputListMovies() {
+        String output = testController.processMenuInput("list movies");
+        TestCase.assertEquals("list movies", output);
     }
 
     @Test

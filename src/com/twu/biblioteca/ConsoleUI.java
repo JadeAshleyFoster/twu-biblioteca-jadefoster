@@ -4,38 +4,40 @@ import java.util.ArrayList;
 public class ConsoleUI {
     private static final int MAX_DETAIL_LENGTH = 23;
 
-    public void printWelcome() {
+//Printers:
+
+    public void printWelcome(String[] menuOptions) {
         System.out.println(getWelcomeMessage());
-        printMainMenu();
+        printMainMenu(menuOptions);
     }
 
-    public void printMainMenu() {
-        System.out.println(getMainMenu());
+    public void printMainMenu(String[] menuOptions) {
+        System.out.println(getMainMenu(menuOptions));
         System.out.println(getPrompt());
     }
 
-    public void printBookList(ArrayList<Book> bookList) {
+    public void printTableOfLibraryItems(ArrayList<? extends LibraryItem> libraryItems) {
         System.out.println();
         printTableLine();
-        System.out.println(getHeaders());
+        printTableHeaders(libraryItems.get(0).getColumnHeaders());
         printTableLine();
-        if(!bookList.isEmpty()) {
-            System.out.println(getFormattedListOfBooks(bookList));
+        if(!libraryItems.isEmpty()) {
+            printTableItems(libraryItems);
             printTableLine();
         }
         System.out.println();
     }
 
+    private void printTableHeaders(String[] headers) {
+        System.out.println(getFormattedHeaders(headers));
+    }
+
+    private void printTableItems(ArrayList<? extends LibraryItem> items) {
+        System.out.println(getFormattedListOfItems(items));
+    }
+
     public void printInvalidMenuOptionMessage() {
         System.out.println("Sorry that is not a valid option. Please choose another.\n");
-    }
-
-    public String getMainMenu() {
-       return "Main Menu:\tList Books\t-\tCheck Out A Book\t-\tReturn A Book\t-\tQuit";
-    }
-
-    public String getPrompt() {
-        return "Please choose an option ...> ";
     }
 
     public void printGoodBye() {
@@ -54,37 +56,64 @@ public class ConsoleUI {
         System.out.println("That book is not available.");
     }
 
-    public void printBookReturnedMessage(Book book) {
-        System.out.println("You have returned " + book.getTitle() + ", " + book.getAuthor() + ". (" +book.getYearPublished() + ").");
-        System.out.println("Thank you for returning the book.");
-    }
-
     public void printInvalidBookToReturnMessage() {
         System.out.println("That is not a valid book to return.");
     }
 
+    public void printBookReturnedMessage(Book book) {
+        System.out.println("Thank you for returning the book.");
+    }
+
     public void printBookCheckedOutMessage(Book book) {
-        System.out.println("You have checked out " + book.getTitle() + ", " + book.getAuthor() + ". (" +book.getYearPublished() + ").");
         System.out.println("Thank you! Enjoy the book.");
     }
+
+    private void printTableLine() {
+        System.out.println("###############################################################################");
+    }
+
+
+
+//Getters:
 
     public String getWelcomeMessage() {
         return "Welcome to Biblioteca!\n";
     }
 
-    public String getFormattedListOfBooks(ArrayList<Book> bookList) {
-        String listOfBooks = "";
-        for (Book book:bookList) {
-            listOfBooks += getFormattedBookDetails(book);
+    public String getFormattedListOfItems(ArrayList<? extends LibraryItem> libraryItems) {
+        String formattedItemsList = "";
+        for (LibraryItem item:libraryItems) {
+            formattedItemsList += getFormattedItemDetails(item);        //TODO: this method
         }
-        return listOfBooks.substring(0, listOfBooks.length()-1);    //to format next line
+        return removeLastCharacter(formattedItemsList);
     }
 
-    private String getFormattedBookDetails(Book book) {
-        String title = formatDetail(book.getTitle());
-        String author = formatDetail(book.getAuthor());
-        String yearPublished = formatDetail(Integer.toString(book.getYearPublished()));
-        return "# " + title + " # " + author + " # " + yearPublished + " #\n";
+    public String getFormattedHeaders(String[] headers) {
+        String formattedHeaders = "";
+        for (String header:headers) {
+            formattedHeaders += "# " + formatDetail(header) + " ";
+        }
+        return formattedHeaders + "#";
+    }
+
+    public String getPrompt() {
+        return "Please choose an option ...> ";
+    }
+
+    public String getMainMenu(String[] menuOptions) {
+        String mainMenu = "Main Menu:\t-\t";
+        for (String option:menuOptions) {
+            mainMenu += option + "\t-\t";
+        }
+        return mainMenu;
+    }
+
+    private String getFormattedItemDetails(LibraryItem item) {
+        String formattedItemDetails = "# ";
+        for (String detail:item.getAllDetails()) {
+            formattedItemDetails += formatDetail(detail) + "# ";
+        }
+        return formattedItemDetails;
     }
 
     private String formatDetail(String detail) {
@@ -95,15 +124,24 @@ public class ConsoleUI {
     }
 
     private String formatDetailLength(String detail) {
-        return detail + getJustifier(MAX_DETAIL_LENGTH - detail.length());
+        return detail + getColumnJustifier(MAX_DETAIL_LENGTH - detail.length());
     }
 
-    private String getJustifier(int justifierLength) {
+    private String getColumnJustifier(int justifierLength) {
         String justifier = "";
         for (int i = 0; i < justifierLength; i++) {
             justifier += " ";
         }
         return justifier;
+    }
+
+
+
+
+//Other methods:
+
+    private String removeLastCharacter(String stringToShorten) {
+        return stringToShorten.substring(0, stringToShorten.length()-1);
     }
 
     private String shortenDetail(String detail) {
@@ -114,13 +152,18 @@ public class ConsoleUI {
         return detail.length() > MAX_DETAIL_LENGTH;
     }
 
-    public String getHeaders() {
-        return "#          TITLE          #          AUTHOR         #      YEAR PUBLISHED     #";
-    }
 
-    private void printTableLine() {
-        System.out.println("###############################################################################");
-    }
+
+
+
+
+
+
+
+
+
+
+
 
 
 }
