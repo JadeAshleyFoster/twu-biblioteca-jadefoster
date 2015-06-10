@@ -8,28 +8,38 @@ import static junit.framework.TestCase.assertTrue;
 
 public class LibraryTest {
     private Library testLibrary;
-    private LibraryItem testLibraryItem;
+    private Book testBook;
+    private Movie testMovie;
 
     @Before
     public void setUp() {
         testLibrary = new Library();
-        testLibraryItem = testLibrary.getLibraryItems().get(0);
+        testBook = testLibrary.getBooks().get(0);
+        testMovie = testLibrary.getMovies().get(0);
     }
 
     @Test
-    public void testCheckOutItem() throws Exception {
-        testLibrary.checkOutItem(testLibraryItem);
-        assertTrue(testLibrary.getCheckedOutItems().contains(testLibraryItem));
-        assertFalse(testLibrary.getLibraryItems().contains(testLibraryItem));
+    public void testCheckOutBook() throws Exception {
+        testLibrary.checkOutBook(testBook);
+        assertTrue(testLibrary.getCheckedOutBooks().contains(testBook));
+        assertFalse(testLibrary.getBooks().contains(testBook));
     }
 
     @Test
-    public void testReturnItem() throws Exception {
-        testLibrary.checkOutItem(testLibraryItem);
-        testLibrary.returnItem(testLibraryItem);
-        assertTrue(testLibrary.getLibraryItems().contains(testLibraryItem));
-        assertFalse(testLibrary.getCheckedOutItems().contains(testLibraryItem));
+    public void testCheckOutMovie() throws Exception {
+        testLibrary.checkOutMovie(testMovie);
+        assertTrue(testLibrary.getCheckedOutMovies().contains(testMovie));
+        assertFalse(testLibrary.getMovies().contains(testMovie));
     }
 
+    @Test
+    public void testReturnBook() throws Exception {
+        testLibrary.checkOutBook(testBook);
+        testLibrary.returnBook(testBook);
+        assertTrue(testLibrary.getBooks().contains(testBook));
+        assertFalse(testLibrary.getCheckedOutBooks().contains(testBook));
+    }
+
+    //TODO: return movie?
 
 }

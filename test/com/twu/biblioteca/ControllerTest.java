@@ -47,32 +47,32 @@ public class ControllerTest {
     @Test
     public void testCheckOutABook() throws Exception {
         String input = "snow crash";
-        LibraryItem itemToCheckOut = testController.checkOutAnItem(input);
-        assertFalse(library.getLibraryItems().contains(itemToCheckOut));
-        assertTrue(library.getCheckedOutItems().contains(itemToCheckOut));
+        Book bookToCheckOut = testController.checkOutABook(input);
+        assertFalse(library.getBooks().contains(bookToCheckOut));
+        assertTrue(library.getCheckedOutBooks().contains(bookToCheckOut));
     }
 
     @Test
     public void testInvalidCheckOutBook() throws Exception {
         String input = "2+2=5";
-        LibraryItem invalidItem = testController.checkOutAnItem(input);
-        assertFalse(library.getCheckedOutItems().contains(invalidItem));
+        LibraryItem invalidItem = testController.checkOutABook(input);
+        assertFalse(library.getCheckedOutBooks().contains(invalidItem));
     }
 
     @Test
     public void testReturnABook() throws Exception {
         String input = "the nature of code";
-        testController.checkOutAnItem(input);
-        LibraryItem itemToReturn = testController.returnAnItem(input);
-        assertFalse(library.getCheckedOutItems().contains(itemToReturn));
-        assertTrue(library.getLibraryItems().contains(itemToReturn));
+        testController.checkOutABook(input);
+        Book bookToReturn = testController.returnABook(input);
+        assertFalse(library.getCheckedOutBooks().contains(bookToReturn));
+        assertTrue(library.getBooks().contains(bookToReturn));
     }
 
     @Test
     public void testInvalidReturnBook() throws Exception {
         String input = "finkleburger";
-        LibraryItem invalidItem = testController.returnAnItem(input);
-        assertFalse(library.getLibraryItems().contains(invalidItem));
+        LibraryItem invalidItem = testController.returnABook(input);
+        assertFalse(library.getBooks().contains(invalidItem));
     }
 
 

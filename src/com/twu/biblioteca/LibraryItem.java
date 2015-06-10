@@ -1,8 +1,9 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
+
 public abstract class LibraryItem {
     protected String title, year, type;
-    protected String[] columnHeaders, allDetails;
 
     public LibraryItem(String title, String year, String typeOfItem) {
         this.title = title;
@@ -18,24 +19,15 @@ public abstract class LibraryItem {
         return title;
     }
 
-    public String[] getColumnHeaders() {
-        return columnHeaders;
-    }
-
-    protected void setColumnHeaders(String[] columnHeaders) {
-        this.columnHeaders = columnHeaders;
-    }
-
-    public String[] getAllDetails() {
-        return allDetails;
-    }
-
-    protected void setAllDetails(String[] allDetails) {
-        this.allDetails = allDetails;
-    }
-
     public String getType() {
         return type;
+    }
+
+    public ArrayList<String> getAllDetails() {
+        ArrayList<String> allDetails = new ArrayList<String>();
+        allDetails.add(title);
+        allDetails.add(year);
+        return allDetails;
     }
 
 }

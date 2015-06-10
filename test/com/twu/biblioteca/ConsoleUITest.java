@@ -24,20 +24,6 @@ public class ConsoleUITest {
     }
 
     @Test
-    public void testListOfBooks() {
-        String output = testUI.getFormattedListOfItems(library.getLibraryItems(), "book");
-        assertEquals("# Perdido Street Station  # China Mieville          # 2000                    #\n" +
-                "# Snow Crash              # Neal Stephenson         # 1992                    #\n" +
-                "# The Nature of Code      # Daniel Shiffman         # 2012                    #", output);
-    }
-
-    /*@Test
-    public void testBookListColumnHeaders() {
-        String output = testUI.getFormattedHeaders(library.getLibraryItems().get(0).getColumnHeaders());
-        assertEquals("#          TITLE          #          AUTHOR         #      YEAR PUBLISHED     #", output);
-    }
-
-    @Test
     public void testMainMenuList() {
         String output = testUI.getMainMenu(controller.getMenuOptions());
         assertEquals("Main Menu:\t-\tList Books\t-\tList Movies\t-\tCheck Out a Book\t-\tReturn a Book\t-\tQuit\t-\t", output);
@@ -48,6 +34,21 @@ public class ConsoleUITest {
         String output = testUI.getPrompt();
         assertEquals("Please choose an option ...> ", output);
     }
+
+    /*@Test
+    public void testListOfBooks() {
+        String output = testUI.getFormattedListOfItems(library.getLibraryItems(), "book");
+        assertEquals("# Perdido Street Station  # China Mieville          # 2000                    #\n" +
+                "# Snow Crash              # Neal Stephenson         # 1992                    #\n" +
+                "# The Nature of Code      # Daniel Shiffman         # 2012                    #", output);
+    }
+
+    @Test
+    public void testBookListColumnHeaders() {
+        String output = testUI.getFormattedHeaders(library.getLibraryItems().get(0).getColumnHeaders());
+        assertEquals("#          TITLE          #          AUTHOR         #      YEAR PUBLISHED     #", output);
+    }
+
 
     @Test
     public void testMovieListColumnHeaders() {

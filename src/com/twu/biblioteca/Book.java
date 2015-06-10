@@ -1,37 +1,42 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
+
 public class Book extends LibraryItem {
     private String author;
+    private static ArrayList<String> columnHeaders;
 
     public Book(String title, String author, String yearPublished) {
         super(title, yearPublished, "book");
         this.author = author;
         createColumnHeaders();
-        createAllDetails();
     }
 
     private void createColumnHeaders() {
-        columnHeaders = new String[3];
-        columnHeaders[0] = "TITLE";
-        columnHeaders[1] = "AUTHOR";
-        columnHeaders[2] = "YEAR PUBLISHED";
-        super.setColumnHeaders(columnHeaders);
+        columnHeaders = new ArrayList<String>();
+        columnHeaders.add("TITLE");
+        columnHeaders.add("AUTHOR");
+        columnHeaders.add("YEAR PUBLISHED");
     }
 
-    private void createAllDetails() {
-        allDetails = new String[3];
-        allDetails[0] = title;
-        allDetails[1] = author;
-        allDetails[2] = year;
-        super.setColumnHeaders(allDetails);
+    public static ArrayList<String> getColumnHeaders() {
+        return columnHeaders;
+    }
+
+    public static int getNumberOfColumnHeaders() {
+        return columnHeaders.size();
+    }
+
+    public ArrayList<String> getAllDetails() {
+        ArrayList<String> allDetails = new ArrayList<String>();
+        allDetails.add(title);
+        allDetails.add(author);
+        allDetails.add(year);
+        return allDetails;
     }
 
     public String getAuthor() {
         return author;
-    }
-
-    public String[] getAllDetails() {
-        return allDetails;
     }
 
 }

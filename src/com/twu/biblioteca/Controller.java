@@ -48,20 +48,20 @@ public class Controller {
 
     public String processInput(String input) {
         if (input.equals("list books")) {
-            ui.printTableOfLibraryItems(library.getLibraryItems(), "book");
+            ui.printTableOfBooks(library.getBooks());
             return input;
         } else if (input.equals("list movies")) {
-            ui.printTableOfLibraryItems(library.getLibraryItems(), "movie");
+            ui.printTableOfMovies(library.getMovies());
             return input;
         } else if (input.equals("quit")) {
             return input;
         } else if (input.equals("check out a book")) {
             ui.printQueryWhichItemToCheckOut();
-            checkOutAnItem(scanner.nextLine().toLowerCase());
+            checkOutABook(scanner.nextLine().toLowerCase());
             return input;
         } else if (input.equals("return a book")) {
             ui.printQueryWhichItemToReturn();
-            returnAnItem(scanner.nextLine().toLowerCase());
+            returnABook(scanner.nextLine().toLowerCase());
             return input;
         } else {
             ui.printInvalidMenuOptionMessage();
@@ -80,26 +80,26 @@ public class Controller {
     }
 
 
-    public LibraryItem checkOutAnItem(String input) {
-        LibraryItem itemToCheckOut = checkItemIsInList(input, library.getLibraryItems());
-        if (itemToCheckOut == null) {
+    public Book checkOutABook(String input) {
+        Book bookToCheckOut = (Book) checkItemIsInList(input, library.getBooks());
+        if (bookToCheckOut == null) {
             ui.printInvalidItemMessage();
         } else {
-            library.checkOutItem(itemToCheckOut);
-            ui.printItemCheckedOutMessage(itemToCheckOut);
+            library.checkOutBook(bookToCheckOut);
+            ui.printItemCheckedOutMessage(bookToCheckOut);
         }
-        return itemToCheckOut;
+        return bookToCheckOut;
     }
 
-    public LibraryItem returnAnItem(String input) {
-        LibraryItem itemToReturn = checkItemIsInList(input, library.getCheckedOutItems());
-        if (itemToReturn == null) {
+    public Book returnABook(String input) {
+        Book bookToReturn = (Book) checkItemIsInList(input, library.getCheckedOutBooks());
+        if (bookToReturn == null) {
             ui.printInvalidItemToReturnMessage();
         } else {
-            library.returnItem(itemToReturn);
-            ui.printItemReturnedMessage(itemToReturn);
+            library.returnBook(bookToReturn);
+            ui.printItemReturnedMessage(bookToReturn);
         }
-        return itemToReturn;
+        return bookToReturn;
     }
 
     public ArrayList<String> getMenuOptions() {

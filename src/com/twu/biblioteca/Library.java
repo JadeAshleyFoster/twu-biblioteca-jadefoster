@@ -3,42 +3,59 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 
 public class Library {
-    private ArrayList<LibraryItem> libraryItems, checkedOutItems;
+    private ArrayList<Book> books, checkedOutBooks;
+    private ArrayList<Movie> movies, checkedOutMovies;
 
     public Library() {
-        libraryItems = new ArrayList<LibraryItem>();
         createBooks();
         createMovies();
-        checkedOutItems = new ArrayList<LibraryItem>();
     }
 
     private void createMovies() {
-        libraryItems.add(new Movie("Akira", "1988", "Katsuhiro Otomo", "8"));
-        libraryItems.add(new Movie("Planet Terror", "2007", "Robert Rodriguez", "7"));
-        libraryItems.add(new Movie("Interstellar", "2014", "Christopher Nolan", "8"));
+        movies = new ArrayList<Movie>();
+        movies.add(new Movie("Akira", "1988", "Katsuhiro Otomo", "8"));
+        movies.add(new Movie("Planet Terror", "2007", "Robert Rodriguez", "7"));
+        movies.add(new Movie("Interstellar", "2014", "Christopher Nolan", "8"));
+        checkedOutMovies = new ArrayList<Movie>();
     }
 
     private void createBooks() {
-        libraryItems.add(new Book("Perdido Street Station", "China Mieville", "2000"));
-        libraryItems.add(new Book("Snow Crash", "Neal Stephenson", "1992"));
-        libraryItems.add(new Book("The Nature of Code", "Daniel Shiffman", "2012"));
+        books = new ArrayList<Book>();
+        books.add(new Book("Perdido Street Station", "China Mieville", "2000"));
+        books.add(new Book("Snow Crash", "Neal Stephenson", "1992"));
+        books.add(new Book("The Nature of Code", "Daniel Shiffman", "2012"));
+        checkedOutBooks = new ArrayList<Book>();
     }
 
-    public ArrayList<LibraryItem> getCheckedOutItems() {
-        return checkedOutItems;
+    public ArrayList<Movie> getCheckedOutMovies() {
+        return checkedOutMovies;
     }
 
-    public ArrayList<LibraryItem> getLibraryItems() {
-        return libraryItems;
+    public ArrayList<Movie> getMovies() {
+        return movies;
     }
 
-    public void checkOutItem(LibraryItem item) {
-        libraryItems.remove(item);
-        checkedOutItems.add(item);
+    public ArrayList<Book> getCheckedOutBooks() {
+        return checkedOutBooks;
     }
 
-    public void returnItem(LibraryItem item) {
-        libraryItems.add(item);
-        checkedOutItems.remove(item);
+    public ArrayList<Book> getBooks() {
+        return books;
+    }
+
+
+    public void checkOutBook(Book book) {
+        books.remove(book);
+        checkedOutBooks.add(book);
+    }
+
+    public void returnBook(Book book) {
+        books.add(book);
+        checkedOutBooks.remove(book);
+    }
+
+    public void checkOutMovie(Movie movie) {
+        movies.remove(movie);
+        movies.add(movie);
     }
 }
