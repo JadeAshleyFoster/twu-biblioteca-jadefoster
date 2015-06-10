@@ -4,7 +4,7 @@ public class Movie extends LibraryItem{
     private String director, rating;
 
     public Movie(String name, String year, String director, String rating) {
-        super(name, year);
+        super(name, year, "movie");
         this.director = director;
         this.rating = rating;
         createColumnHeaders();

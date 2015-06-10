@@ -1,12 +1,13 @@
 package com.twu.biblioteca;
 
 public abstract class LibraryItem {
-    protected String title, year;
+    protected String title, year, type;
     protected String[] columnHeaders, allDetails;
 
-    public LibraryItem(String title, String year) {
+    public LibraryItem(String title, String year, String typeOfItem) {
         this.title = title;
         this.year = year;
+        type = typeOfItem;
     }
 
     public String getYear() {
@@ -33,5 +34,8 @@ public abstract class LibraryItem {
         this.allDetails = allDetails;
     }
 
+    public String getType() {
+        return type;
+    }
 
 }

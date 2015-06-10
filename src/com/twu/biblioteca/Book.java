@@ -4,7 +4,7 @@ public class Book extends LibraryItem {
     private String author;
 
     public Book(String title, String author, String yearPublished) {
-        super(title, yearPublished);
+        super(title, yearPublished, "book");
         this.author = author;
         createColumnHeaders();
         createAllDetails();

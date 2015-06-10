@@ -1,4 +1,5 @@
 package com.twu.biblioteca;
+
 import java.util.ArrayList;
 
 public class ConsoleUI {
@@ -8,23 +9,23 @@ public class ConsoleUI {
 
 //Printers:
 
-    public void printWelcome(String[] menuOptions) {
+    public void printWelcome(ArrayList<String> menuOptions) {
         System.out.println(getWelcomeMessage());
         printMainMenu(menuOptions);
     }
 
-    public void printMainMenu(String[] menuOptions) {
+    public void printMainMenu(ArrayList<String> menuOptions) {
         System.out.println(getMainMenu(menuOptions));
         System.out.println(getPrompt());
     }
 
-    public void printTableOfLibraryItems(ArrayList<? extends LibraryItem> libraryItems) {
+    public void printTableOfLibraryItems(ArrayList<? extends LibraryItem> libraryItems, String itemType) {
         System.out.println();
         printTableLine(libraryItems.get(0).getColumnHeaders().length);
         printTableHeaders(libraryItems.get(0).getColumnHeaders());
         printTableLine(libraryItems.get(0).getColumnHeaders().length);
         if(!libraryItems.isEmpty()) {
-            printTableItems(libraryItems);
+            printTableItems(libraryItems, itemType);
             printTableLine(libraryItems.get(0).getColumnHeaders().length);
         }
         System.out.println();
@@ -34,8 +35,8 @@ public class ConsoleUI {
         System.out.println(getFormattedHeaders(headers));
     }
 
-    private void printTableItems(ArrayList<? extends LibraryItem> items) {
-        System.out.println(getFormattedListOfItems(items));
+    private void printTableItems(ArrayList<? extends LibraryItem> items, String itemType) {
+        System.out.println(getFormattedListOfItems(items, itemType));
     }
 
     public void printInvalidMenuOptionMessage() {
@@ -46,28 +47,28 @@ public class ConsoleUI {
         System.out.println("Thank you for using Biblioteca, goodbye.");
     }
 
-    public void printQueryWhichBookToCheckOut() {
-        System.out.println("Which book would you like to check out?");
+    public void printQueryWhichItemToCheckOut() {
+        System.out.println("What would you like to check out?");
     }
 
-    public void printQueryWhichBookToReturn() {
-        System.out.println("Which book would you like to return?");
+    public void printQueryWhichItemToReturn() {
+        System.out.println("What would you like to return?");
     }
 
-    public void printInvalidBookMessage() {
-        System.out.println("That book is not available.");
+    public void printInvalidItemMessage() {
+        System.out.println("That item is not available.");
     }
 
-    public void printInvalidBookToReturnMessage() {
-        System.out.println("That is not a valid book to return.");
+    public void printInvalidItemToReturnMessage() {
+        System.out.println("That is not a valid item to return.");
     }
 
-    public void printBookReturnedMessage(Book book) {
-        System.out.println("Thank you for returning the book.");
+    public void printItemReturnedMessage(LibraryItem item) {
+        System.out.println("Thank you for returning the" + item.getType() + ".");
     }
 
-    public void printBookCheckedOutMessage(Book book) {
-        System.out.println("Thank you! Enjoy the book.");
+    public void printItemCheckedOutMessage(LibraryItem item) {
+        System.out.println("Thank you! Enjoy the " + item.getType() + ".");
     }
 
     private void printTableLine(int columns) {
@@ -87,10 +88,12 @@ public class ConsoleUI {
         return "Welcome to Biblioteca!\n";
     }
 
-    public String getFormattedListOfItems(ArrayList<? extends LibraryItem> libraryItems) {
+    public String getFormattedListOfItems(ArrayList<? extends LibraryItem> libraryItems, String itemType) {
         String formattedItemsList = "";
         for (LibraryItem item:libraryItems) {
-            formattedItemsList += getFormattedItemDetails(item) + "\n";        //TODO: this method
+            if (item.getType().equals(itemType)) {
+                formattedItemsList += getFormattedItemDetails(item) + "\n";        //TODO: this method
+            }
         }
         return removeLastCharacter(formattedItemsList);
     }
@@ -107,7 +110,7 @@ public class ConsoleUI {
         return "Please choose an option ...> ";
     }
 
-    public String getMainMenu(String[] menuOptions) {
+    public String getMainMenu(ArrayList<String> menuOptions) {
         String mainMenu = "Main Menu:\t-\t";
         for (String option:menuOptions) {
             mainMenu += option + "\t-\t";

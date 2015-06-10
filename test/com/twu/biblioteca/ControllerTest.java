@@ -9,72 +9,70 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class ControllerTest {
-    BibliotecaApp bibTest;
-    Controller testController;
+    private Controller testController;
+    private Library library;
 
 
     @Before
     public void setUp() {
-        bibTest = new BibliotecaApp();
-        bibTest.createBookList();
-        bibTest.createMovieList();
-        testController = new Controller(bibTest);
+        library = new Library();
+        testController = new Controller(library);
     }
 
     @Test
-    public void testUserInputListBooks() {
-        String output = testController.processMenuInput("list books");
+    public void testUserInputListBooks() throws Exception {
+        String output = testController.processInput("list books");
         assertEquals("list books", output);
     }
 
     @Test
-    public void testUserInputListMovies() {
-        String output = testController.processMenuInput("list movies");
+    public void testUserInputListMovies() throws Exception {
+        String output = testController.processInput("list movies");
         TestCase.assertEquals("list movies", output);
     }
 
     @Test
-    public void testInvalidMenuChoice() {
-        String output = testController.processMenuInput("gobbledigoop");
+    public void testInvalidMenuChoice() throws Exception {
+        String output = testController.processInput("gobbledigoop");
         assertEquals("invalid option", output);
     }
 
     @Test
-    public void testQuit() {
-        String output = testController.processMenuInput("quit");
+    public void testQuit() throws Exception {
+        String output = testController.processInput("quit");
         assertEquals("quit", output);
     }
 
 
     @Test
-    public void testCheckOutABook() {
+    public void testCheckOutABook() throws Exception {
         String input = "snow crash";
-        Book bookToCheckOut = testController.checkOutABook(input);
-        assertFalse(bibTest.getBookList().contains(bookToCheckOut));
-        assertTrue(bibTest.getCheckedOutBooks().contains(bookToCheckOut));
+        LibraryItem itemToCheckOut = testController.checkOutAnItem(input);
+        assertFalse(library.getLibraryItems().contains(itemToCheckOut));
+        assertTrue(library.getCheckedOutItems().contains(itemToCheckOut));
     }
 
     @Test
-    public void testInvalidCheckOutBook() {
+    public void testInvalidCheckOutBook() throws Exception {
         String input = "2+2=5";
-        Book invalidBookToCheckOut = testController.checkOutABook(input);
-        assertFalse(bibTest.getCheckedOutBooks().contains(invalidBookToCheckOut));
+        LibraryItem invalidItem = testController.checkOutAnItem(input);
+        assertFalse(library.getCheckedOutItems().contains(invalidItem));
     }
 
     @Test
-    public void testReturnABook() {
+    public void testReturnABook() throws Exception {
         String input = "the nature of code";
-        testController.checkOutABook(input);
-        Book returnedBook = testController.returnABook(input);
-        assertFalse(bibTest.getCheckedOutBooks().contains(returnedBook));
-        assertTrue(bibTest.getBookList().contains(returnedBook));
+        testController.checkOutAnItem(input);
+        LibraryItem itemToReturn = testController.returnAnItem(input);
+        assertFalse(library.getCheckedOutItems().contains(itemToReturn));
+        assertTrue(library.getLibraryItems().contains(itemToReturn));
     }
 
     @Test
-    public void testInvalidReturnBook() {
+    public void testInvalidReturnBook() throws Exception {
         String input = "finkleburger";
-        Book invalidBookToReturn = testController.returnABook(input);
-        assertFalse(bibTest.getBookList().contains(invalidBookToReturn));
+        LibraryItem invalidItem = testController.returnAnItem(input);
+        assertFalse(library.getLibraryItems().contains(invalidItem));
     }
 
 
