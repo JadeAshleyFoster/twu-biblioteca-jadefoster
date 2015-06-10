@@ -11,7 +11,7 @@ public class Book extends LibraryItem {
     }
 
     private void createColumnHeaders() {
-        columnHeaders = new String[2];
+        columnHeaders = new String[3];
         columnHeaders[0] = "TITLE";
         columnHeaders[1] = "AUTHOR";
         columnHeaders[2] = "YEAR PUBLISHED";
@@ -19,7 +19,7 @@ public class Book extends LibraryItem {
     }
 
     private void createAllDetails() {
-        allDetails = new String[2];
+        allDetails = new String[3];
         allDetails[0] = title;
         allDetails[1] = author;
         allDetails[2] = year;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 public class ConsoleUI {
     private static final int MAX_DETAIL_LENGTH = 23;
 
+    //TODO: use printf instead
+
 //Printers:
 
     public void printWelcome(String[] menuOptions) {
@@ -18,12 +20,12 @@ public class ConsoleUI {
 
     public void printTableOfLibraryItems(ArrayList<? extends LibraryItem> libraryItems) {
         System.out.println();
-        printTableLine();
+        printTableLine(libraryItems.get(0).getColumnHeaders().length);
         printTableHeaders(libraryItems.get(0).getColumnHeaders());
-        printTableLine();
+        printTableLine(libraryItems.get(0).getColumnHeaders().length);
         if(!libraryItems.isEmpty()) {
             printTableItems(libraryItems);
-            printTableLine();
+            printTableLine(libraryItems.get(0).getColumnHeaders().length);
         }
         System.out.println();
     }
@@ -68,8 +70,13 @@ public class ConsoleUI {
         System.out.println("Thank you! Enjoy the book.");
     }
 
-    private void printTableLine() {
-        System.out.println("###############################################################################");
+    private void printTableLine(int columns) {
+        String column = "###########################";
+        String tableLine = "";
+        for (int i = 0; i < columns; i++) {
+            tableLine += column;
+        }
+        System.out.println(tableLine);
     }
 
 
@@ -83,7 +90,7 @@ public class ConsoleUI {
     public String getFormattedListOfItems(ArrayList<? extends LibraryItem> libraryItems) {
         String formattedItemsList = "";
         for (LibraryItem item:libraryItems) {
-            formattedItemsList += getFormattedItemDetails(item);        //TODO: this method
+            formattedItemsList += getFormattedItemDetails(item) + "\n";        //TODO: this method
         }
         return removeLastCharacter(formattedItemsList);
     }
@@ -109,9 +116,9 @@ public class ConsoleUI {
     }
 
     private String getFormattedItemDetails(LibraryItem item) {
-        String formattedItemDetails = "# ";
+        String formattedItemDetails = "#";
         for (String detail:item.getAllDetails()) {
-            formattedItemDetails += formatDetail(detail) + "# ";
+            formattedItemDetails += " " + formatDetail(detail) + "#";
         }
         return formattedItemDetails;
     }
@@ -124,7 +131,7 @@ public class ConsoleUI {
     }
 
     private String formatDetailLength(String detail) {
-        return detail + getColumnJustifier(MAX_DETAIL_LENGTH - detail.length());
+        return detail + getColumnJustifier(MAX_DETAIL_LENGTH - detail.length() + 1);
     }
 
     private String getColumnJustifier(int justifierLength) {

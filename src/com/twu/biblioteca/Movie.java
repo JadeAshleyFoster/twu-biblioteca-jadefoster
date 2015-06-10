@@ -12,7 +12,7 @@ public class Movie extends LibraryItem{
     }
 
     public void createColumnHeaders() {
-        columnHeaders = new String[3];
+        columnHeaders = new String[4];
         columnHeaders[0] = "NAME";
         columnHeaders[1] = "YEAR";
         columnHeaders[2] = "DIRECTOR";
@@ -21,7 +21,7 @@ public class Movie extends LibraryItem{
     }
 
     private void createAllDetails() {
-        allDetails = new String[2];
+        allDetails = new String[4];
         allDetails[0] = title;
         allDetails[1] = year;
         allDetails[2] = director;

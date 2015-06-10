@@ -7,26 +7,11 @@ public class Controller {
     private ConsoleUI ui;
     private BibliotecaApp bib;
     private Scanner scanner;
-    private String[] menuOptions;
 
     public Controller(BibliotecaApp bib) {
         ui = new ConsoleUI();
         this.bib = bib;
         scanner = new Scanner(System.in);
-        createMenuOptions();
-    }
-
-    private void createMenuOptions() {
-        menuOptions = new String[4];     //TODO: Where should menu options go? It's own class?
-        menuOptions[0] = "List Books";
-        menuOptions[1] = "List Movies";
-        menuOptions[2] = "Check Out a Book";
-        menuOptions[3] = "Return a Book";
-        menuOptions[4] = "Quit";
-    }
-
-    public String[] getMenuOptions() {
-        return menuOptions;
     }
 
     public String processUserInput() {

@@ -3,8 +3,9 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 
 public class BibliotecaApp {
-    ArrayList<Book> bookList, checkedOutBooks;
-    ArrayList<Movie> movieList;
+    private ArrayList<Book> bookList, checkedOutBooks;
+    private ArrayList<Movie> movieList;
+    private String[] menuOptions;
 
 
     public static void main(String[] args) {
@@ -17,9 +18,10 @@ public class BibliotecaApp {
         createMovieList();
 
         Controller controller = new Controller(this);
+        createMenuOptions();
 
         ConsoleUI ui = new ConsoleUI();
-        ui.printWelcome(controller.getMenuOptions());
+        ui.printWelcome(menuOptions);
 
         boolean quit = false;
         while (!quit) {
@@ -29,15 +31,24 @@ public class BibliotecaApp {
                 quit = true;
             } else {
                 System.out.println();
-                ui.printMainMenu(controller.getMenuOptions());
+                ui.printMainMenu(menuOptions);
             }
         }
 
     }
 
+    public void createMenuOptions() {
+        menuOptions = new String[5];     //TODO: Where should menu options go? It's own class?
+        menuOptions[0] = "List Books";
+        menuOptions[1] = "List Movies";
+        menuOptions[2] = "Check Out a Book";
+        menuOptions[3] = "Return a Book";
+        menuOptions[4] = "Quit";
+    }
+
     public void createMovieList() {
         movieList = new ArrayList<Movie>();
-        movieList.add(new Movie("Akira", "1998", "Katsuhiro Otomo", "8"));
+        movieList.add(new Movie("Akira", "1988", "Katsuhiro Otomo", "8"));
         movieList.add(new Movie("Planet Terror", "2007", "Robert Rodriguez", "7"));
         movieList.add(new Movie("Interstellar", "2014", "Christopher Nolan", "8"));
     }
@@ -59,6 +70,10 @@ public class BibliotecaApp {
     public void returnBook(Book book) {
         checkedOutBooks.remove(book);
         bookList.add(book);
+    }
+
+    public String[] getMenuOptions() {
+        return menuOptions;
     }
 
     public ArrayList<Book> getBookList() {
