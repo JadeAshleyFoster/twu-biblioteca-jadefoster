@@ -58,4 +58,9 @@ public class Library {
         movies.remove(movie);
         checkedOutMovies.add(movie);
     }
+
+    public void returnMovie(Movie movie) {
+        movies.add(movie);
+        checkedOutMovies.remove(movie);
+    }
 }

@@ -19,6 +19,8 @@ public class ControllerTest {
         testController = new Controller(library);
     }
 
+    //TODO: Test check out/return a movie or book input...
+
     @Test
     public void testUserInputListBooks() throws Exception {
         String output = testController.processInput("list books");
@@ -71,7 +73,7 @@ public class ControllerTest {
     @Test
     public void testInvalidReturnBook() throws Exception {
         String input = "finkleburger";
-        LibraryItem invalidItem = testController.returnABook(input);
+        Book invalidItem = testController.returnABook(input);
         assertFalse(library.getBooks().contains(invalidItem));
     }
 
@@ -90,7 +92,19 @@ public class ControllerTest {
         assertFalse(library.getCheckedOutMovies().contains(invalidMovie));
     }
 
-    //TODO: assume return a movie to? test check out a movie or book input...
+    @Test
+    public void testReturnAMovie() throws Exception {
+        String input = "planet terror";
+        testController.checkOutAMovie(input);
+        Movie movieToReturn = testController.returnAMovie(input);
+        assertFalse(library.getCheckedOutMovies().contains(movieToReturn));
+        assertTrue(library.getMovies().contains(movieToReturn));
+    }
 
-
+    @Test
+    public void testInvalidReturnMovie() throws Exception {
+        String input = "fghfbg,fbg,fd";
+        Movie invalidItem = testController.returnAMovie(input);
+        assertFalse(library.getMovies().contains(invalidItem));
+    }
 }

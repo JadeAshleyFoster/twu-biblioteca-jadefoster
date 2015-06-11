@@ -40,6 +40,12 @@ public class LibraryTest {
         assertFalse(testLibrary.getCheckedOutBooks().contains(testBook));
     }
 
-    //TODO: return movie?
+    @Test
+    public void testReturnMovie() throws Exception {
+        testLibrary.checkOutMovie(testMovie);
+        testLibrary.returnMovie(testMovie);
+        assertTrue(testLibrary.getMovies().contains(testMovie));
+        assertFalse(testLibrary.getCheckedOutMovies().contains(testMovie));
+    }
 
 }

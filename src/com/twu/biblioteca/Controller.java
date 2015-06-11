@@ -117,6 +117,17 @@ public class Controller {
         return bookToReturn;
     }
 
+    public Movie returnAMovie(String input) {
+        Movie movieToReturn = (Movie) checkItemIsInList(input, library.getCheckedOutMovies());
+        if (movieToReturn == null) {
+            ui.printInvalidItemToReturnMessage();
+        } else {
+            library.returnMovie(movieToReturn);
+            ui.printItemReturnedMessage(movieToReturn);
+        }
+        return movieToReturn;
+    }
+
     public ArrayList<String> getMenuOptions() {
         return menuOptions;
     }
