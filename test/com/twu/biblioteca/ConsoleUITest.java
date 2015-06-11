@@ -28,7 +28,7 @@ public class ConsoleUITest {
     @Test
     public void testMainMenuList() {
         String output = testUI.getMainMenu(controller.getMenuOptions());
-        assertEquals("Main Menu:\t-\tList Books\t-\tList Movies\t-\tCheck Out a Book\t-\tReturn a Book\t-\tQuit\t-\t", output);
+        assertEquals("Main Menu:\t-\tList Books\t-\tList Movies\t-\tCheck Out a Book\t-\tCheck Out a Movie\t-\tReturn a Book\t-\tQuit\t-\t", output);
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ConsoleUITest {
     public void testListOfMovies() {
         String output = testUI.getFormattedListOfItems(library.getMovies());
         assertEquals("# Akira                   # 1988                    # Katsuhiro Otomo         # 8                       #\n" +
-                "# Planet Terror           # 2007                    # Robert Rodriguez        # 7                       #\n" +
+                "# Planet Terror           # 2007                    # Robert Rodriguez        # unrated                 #\n" +
                 "# Interstellar            # 2014                    # Christopher Nolan       # 8                       #", output);
     }
 }

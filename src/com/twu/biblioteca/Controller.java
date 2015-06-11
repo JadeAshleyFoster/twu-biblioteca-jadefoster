@@ -41,6 +41,7 @@ public class Controller {
         menuOptions.add("List Books");
         menuOptions.add("List Movies");
         menuOptions.add("Check Out a Book");
+        menuOptions.add("Check Out a Movie");
         menuOptions.add("Return a Book");
         menuOptions.add("Quit");
     }
@@ -57,6 +58,10 @@ public class Controller {
         } else if (input.equals("check out a book")) {
             ui.printQueryWhichItemToCheckOut();
             checkOutABook(scanner.nextLine().toLowerCase());
+            return input;
+        } else if(input.equals("check out a movie")) {
+            ui.printQueryWhichItemToCheckOut();
+            checkOutAMovie(scanner.nextLine().toLowerCase());
             return input;
         } else if (input.equals("return a book")) {
             ui.printQueryWhichItemToReturn();
@@ -88,6 +93,17 @@ public class Controller {
             ui.printItemCheckedOutMessage(bookToCheckOut);
         }
         return bookToCheckOut;
+    }
+
+    public Movie checkOutAMovie(String input) {
+        Movie movieToCheckOut = (Movie) checkItemIsInList(input, library.getMovies());
+        if (movieToCheckOut == null) {
+            ui.printInvalidItemMessage();
+        } else {
+            library.checkOutMovie(movieToCheckOut);
+            ui.printItemCheckedOutMessage(movieToCheckOut);
+        }
+        return movieToCheckOut;
     }
 
     public Book returnABook(String input) {

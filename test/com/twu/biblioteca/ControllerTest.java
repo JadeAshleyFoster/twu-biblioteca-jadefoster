@@ -55,8 +55,8 @@ public class ControllerTest {
     @Test
     public void testInvalidCheckOutBook() throws Exception {
         String input = "2+2=5";
-        LibraryItem invalidItem = testController.checkOutABook(input);
-        assertFalse(library.getCheckedOutBooks().contains(invalidItem));
+        Book invalidBook = testController.checkOutABook(input);
+        assertFalse(library.getCheckedOutBooks().contains(invalidBook));
     }
 
     @Test
@@ -74,6 +74,23 @@ public class ControllerTest {
         LibraryItem invalidItem = testController.returnABook(input);
         assertFalse(library.getBooks().contains(invalidItem));
     }
+
+    @Test
+    public void testCheckOutAMovie() throws Exception {
+        String input = "planet terror";
+        Movie movieToCheckOut = testController.checkOutAMovie(input);
+        assertFalse(library.getMovies().contains(movieToCheckOut));
+        assertTrue(library.getCheckedOutMovies().contains(movieToCheckOut));
+    }
+
+    @Test
+    public void testInvalidCheckOutMovie() throws Exception {
+        String input = "harry potter and the donkey from Aldgate";
+        Movie invalidMovie = testController.checkOutAMovie(input);
+        assertFalse(library.getCheckedOutMovies().contains(invalidMovie));
+    }
+
+    //TODO: assume return a movie to? test check out a movie or book input...
 
 
 }

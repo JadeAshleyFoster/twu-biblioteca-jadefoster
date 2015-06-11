@@ -14,7 +14,7 @@ public class Library {
     private void createMovies() {
         movies = new ArrayList<Movie>();
         movies.add(new Movie("Akira", "1988", "Katsuhiro Otomo", "8"));
-        movies.add(new Movie("Planet Terror", "2007", "Robert Rodriguez", "7"));
+        movies.add(new Movie("Planet Terror", "2007", "Robert Rodriguez", "unrated"));
         movies.add(new Movie("Interstellar", "2014", "Christopher Nolan", "8"));
         checkedOutMovies = new ArrayList<Movie>();
     }
