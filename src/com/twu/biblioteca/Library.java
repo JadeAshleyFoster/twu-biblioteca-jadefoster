@@ -5,10 +5,13 @@ import java.util.ArrayList;
 public class Library {
     private ArrayList<Book> books, checkedOutBooks;
     private ArrayList<Movie> movies, checkedOutMovies;
+    private ArrayList<Loginable> loginableMembers;
 
     public Library() {
+        //All for testing purposes
         createBooks();
         createMovies();
+        createMembers();
     }
 
     private void createMovies() {
@@ -27,6 +30,13 @@ public class Library {
         checkedOutBooks = new ArrayList<Book>();
     }
 
+    private void createMembers() {
+        loginableMembers = new ArrayList<Loginable>();
+        loginableMembers.add(new User("123-4567", "IAmCool"));
+        loginableMembers.add(new User("567-8910", "ilovebunnierabbits"));
+        loginableMembers.add(new Librarian("XXX-XXXX", "librarian'saregreat"));
+    }
+
     public ArrayList<Movie> getCheckedOutMovies() {
         return checkedOutMovies;
     }
@@ -43,6 +53,16 @@ public class Library {
         return books;
     }
 
+    public ArrayList<Loginable> getLoginableMembers() { return loginableMembers; }
+
+    public Loginable isValidUserID(String userID) {
+        for (Loginable user: loginableMembers) {
+            if (userID.equals(user.getID())) {
+                return user;
+            }
+        }
+        return null;
+    }
 
     public void checkOutBook(Book book) {
         books.remove(book);

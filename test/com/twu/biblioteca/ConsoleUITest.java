@@ -26,15 +26,27 @@ public class ConsoleUITest {
     }
 
     @Test
+    public void testAskForLoginID() {
+        String output = testUI.getAskForLoginID();
+        assertEquals("Please enter your library number to login.\n...>", output);
+    }
+
+    @Test
+    public void testAskforPassword() {
+        String output = testUI.getAskForPassword();
+        assertEquals("Please enter your password.\n...>", output);
+    }
+
+    /*@Test
     public void testMainMenuList() {
         String output = testUI.getMainMenu(controller.getMenuOptions());
         assertEquals("Main Menu:\t-\tList Books\t-\tList Movies\t-\tCheck Out a Book\t-\tCheck Out a Movie\t-\tReturn a Book\t-\tQuit\t-\t", output);
-    }
+    }*/
 
     @Test
     public void testUserPrompt() {
         String output = testUI.getPrompt();
-        assertEquals("Please choose an option ...> ", output);
+        assertEquals("...>", output);
     }
 
     @Test

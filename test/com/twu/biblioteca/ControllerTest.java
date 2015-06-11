@@ -10,12 +10,14 @@ import static org.junit.Assert.assertFalse;
 
 public class ControllerTest {
     private Controller testController;
+    private User testUser;
     private Library library;
 
 
     @Before
     public void setUp() {
         library = new Library();
+        testUser = (User) library.getLoginableMembers().get(0);
         testController = new Controller(library);
     }
 
@@ -23,25 +25,25 @@ public class ControllerTest {
 
     @Test
     public void testUserInputListBooks() throws Exception {
-        String output = testController.processInput("list books");
+        String output = testController.processInput("list books", testUser);
         assertEquals("list books", output);
     }
 
     @Test
     public void testUserInputListMovies() throws Exception {
-        String output = testController.processInput("list movies");
+        String output = testController.processInput("list movies", testUser);
         TestCase.assertEquals("list movies", output);
     }
 
     @Test
     public void testInvalidMenuChoice() throws Exception {
-        String output = testController.processInput("gobbledigoop");
+        String output = testController.processInput("gobbledigoop", testUser);
         assertEquals("invalid option", output);
     }
 
     @Test
     public void testQuit() throws Exception {
-        String output = testController.processInput("quit");
+        String output = testController.processInput("quit", testUser);
         assertEquals("quit", output);
     }
 
@@ -107,4 +109,6 @@ public class ControllerTest {
         Movie invalidItem = testController.returnAMovie(input);
         assertFalse(library.getMovies().contains(invalidItem));
     }
+
+
 }

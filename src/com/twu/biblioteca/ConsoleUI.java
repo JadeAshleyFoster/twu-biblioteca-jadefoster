@@ -5,18 +5,46 @@ import java.util.ArrayList;
 public class ConsoleUI {
     private static final int MAX_DETAIL_LENGTH = 23;
 
-    public void printWelcome(ArrayList<String> menuOptions) {
+    public void printWelcome() {
         System.out.println(getWelcomeMessage());
-        printMainMenu(menuOptions);
     }
 
     public String getWelcomeMessage() {
         return "Welcome to Biblioteca!\n";
     }
 
+    public void printAskForLoginID() {
+        System.out.println(getAskForLoginID());
+    }
+
+    public void printAskForPassword() {
+        System.out.println(getAskForPassword());
+    }
+
+    public void printIncorrectPasswordMessage() {
+        System.out.println("That password is incorrect.\n");
+    }
+
+    public void printSuccessfulLogin() {
+        System.out.println("Successful login.\n");
+    }
+
+
+    public String getAskForLoginID() {
+        return "Please enter your library number to login.\n" + getPrompt();
+    }
+
+    public void printIncorrectLoginIDMessage() {
+        System.out.println("That is not a valid library number. A library number is in the format XXX-XXXX.\n");
+    }
+
+    public String getAskForPassword() {
+        return "Please enter your password.\n" + getPrompt();
+    }
+
     public void printMainMenu(ArrayList<String> menuOptions) {
         System.out.println(getMainMenu(menuOptions));
-        System.out.println(getPrompt());
+        System.out.println("Please enter and option.\n" + getPrompt());
     }
 
     public String getMainMenu(ArrayList<String> menuOptions) {
@@ -28,7 +56,7 @@ public class ConsoleUI {
     }
 
     public String getPrompt() {
-        return "Please choose an option ...> ";
+        return "...>";
     }
 
     public void printTableOfBooks(ArrayList<Book> books) {

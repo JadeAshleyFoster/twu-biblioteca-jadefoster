@@ -13,17 +13,23 @@ public class Controller {
         ui = new ConsoleUI();
         this.library = library;
         scanner = new Scanner(System.in);
-        createMenuOptions();
     }
 
     public void go() {
-        ui.printWelcome(menuOptions);
+        ui.printWelcome();
+
+        Loginable user = loginUser();
+        createMenuOptions(user);
+        runProgram(user);
+    }
+
+    private void runProgram(Loginable user) {
+        ui.printMainMenu(menuOptions);
 
         boolean quit = false;
         while (!quit) {
-
             String userInput = scanner.nextLine().toLowerCase();
-            String processedInput = processInput(userInput);
+            String processedInput = processInput(userInput, user);
             if (processedInput.equals("quit")) {
                 ui.printGoodBye();
                 scanner.close();
@@ -33,20 +39,56 @@ public class Controller {
                 ui.printMainMenu(menuOptions);
             }
         }
-
     }
 
-    private void createMenuOptions() {
+    public Loginable loginUser() {
+        Loginable user = null;
+        boolean loggedIn = false;
+        while(!loggedIn) {
+            user = getLogInIDFromUser();
+            if (user != null) {
+                loggedIn = getValidPasswordFromUser(user);
+            }else {
+                ui.printIncorrectLoginIDMessage();
+            }
+        }
+        return user;
+    }
+
+    private boolean getValidPasswordFromUser(Loginable user) {
+        ui.printAskForPassword();
+        String userPassword = scanner.nextLine();
+        if (user.getPassword().equals(userPassword)) {
+            ui.printSuccessfulLogin();
+            return true;
+        } else {
+            ui.printIncorrectPasswordMessage();
+        }
+        return false;
+    }
+
+    private Loginable getLogInIDFromUser() {
+        ui.printAskForLoginID();
+        String userLoginId = scanner.nextLine();
+        return library.isValidUserID(userLoginId);
+    }
+
+    private void createMenuOptions(Loginable user) {
         menuOptions = new ArrayList<String>();
         menuOptions.add("List Books");
         menuOptions.add("List Movies");
         menuOptions.add("Check Out a Book");
         menuOptions.add("Check Out a Movie");
         menuOptions.add("Return a Book");
+        menuOptions.add("Return a Movie");
+        if (user.isLibrarian()) {
+            menuOptions.add("List Checked Out Books");
+            menuOptions.add("List Checked Out Movies");
+        }
         menuOptions.add("Quit");
     }
 
-    public String processInput(String input) {
+    public String processInput(String input, Loginable user) {
         if (input.equals("list books")) {
             ui.printTableOfBooks(library.getBooks());
             return input;
@@ -68,9 +110,21 @@ public class Controller {
             returnABook(scanner.nextLine().toLowerCase());
             return input;
         } else {
+            if (user.isLibrarian()) {
+                return processLibrarianOnlyInput(input);
+            }
             ui.printInvalidMenuOptionMessage();
             return "invalid option";
         }
+    }
+
+    private String processLibrarianOnlyInput(String input) {
+        if (input.equals("List Checked Out Books")) {
+            ui.printTableOfBooks(library.getCheckedOutBooks());
+        } else if (input.equals("List Checked Out Movies")) {
+            ui.printTableOfMovies(library.getCheckedOutMovies());
+        }
+        return input;
     }
 
 
