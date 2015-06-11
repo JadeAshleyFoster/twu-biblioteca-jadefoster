@@ -7,12 +7,12 @@ public class Book extends LibraryItem {
     private static ArrayList<String> columnHeaders;
 
     public Book(String title, String author, String yearPublished) {
-        super(title, yearPublished, "book");
+        super(title, yearPublished);
         this.author = author;
         createColumnHeaders();
     }
 
-    private void createColumnHeaders() {
+    protected void createColumnHeaders() {
         columnHeaders = new ArrayList<String>();
         columnHeaders.add("TITLE");
         columnHeaders.add("AUTHOR");
@@ -23,7 +23,7 @@ public class Book extends LibraryItem {
         return columnHeaders;
     }
 
-    public static int getNumberOfColumnHeaders() {
+    public static int getNumberOfColumns() {
         return columnHeaders.size();
     }
 
@@ -37,6 +37,10 @@ public class Book extends LibraryItem {
 
     public String getAuthor() {
         return author;
+    }
+
+    public String toString() {
+        return "book";
     }
 
 }

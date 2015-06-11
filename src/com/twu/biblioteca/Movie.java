@@ -6,8 +6,9 @@ public class Movie extends LibraryItem{
     private String director, rating;
     private static ArrayList<String> columnHeaders;
 
+
     public Movie(String name, String year, String director, String rating) {
-        super(name, year, "movie");
+        super(name, year);
         this.director = director;
         this.rating = rating;
         createColumnHeaders();
@@ -25,7 +26,7 @@ public class Movie extends LibraryItem{
         return columnHeaders;
     }
 
-    public static int getNumberOfColumnHeaders() {
+    public static int getNumberOfColumns() {
         return columnHeaders.size();
     }
 
@@ -45,6 +46,10 @@ public class Movie extends LibraryItem{
 
     public String getDirector() {
         return director;
+    }
+
+    public String toString() {
+        return "movie";
     }
 
 }

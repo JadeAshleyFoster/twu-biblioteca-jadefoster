@@ -56,6 +56,6 @@ public class Library {
 
     public void checkOutMovie(Movie movie) {
         movies.remove(movie);
-        movies.add(movie);
+        checkedOutMovies.add(movie);
     }
 }

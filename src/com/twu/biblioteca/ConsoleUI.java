@@ -33,24 +33,24 @@ public class ConsoleUI {
 
     public void printTableOfBooks(ArrayList<Book> books) {
         System.out.println();
-        printTableLine(Book.getNumberOfColumnHeaders());
+        printTableLine(Book.getNumberOfColumns());
         printTableHeaders(Book.getColumnHeaders());
-        printTableLine(Book.getNumberOfColumnHeaders());
+        printTableLine(Book.getNumberOfColumns());
         if(!books.isEmpty()) {
             printTableItems(books);
-            printTableLine(Book.getNumberOfColumnHeaders());
+            printTableLine(Book.getNumberOfColumns());
         }
         System.out.println();
     }
 
     public void printTableOfMovies(ArrayList<Movie> movies) {
         System.out.println();
-        printTableLine(Movie.getNumberOfColumnHeaders());
+        printTableLine(Movie.getNumberOfColumns());
         printTableHeaders(Movie.getColumnHeaders());
-        printTableLine(Movie.getNumberOfColumnHeaders());
+        printTableLine(Movie.getNumberOfColumns());
         if(!movies.isEmpty()) {
             printTableItems(movies);
-            printTableLine(Movie.getNumberOfColumnHeaders());
+            printTableLine(Movie.getNumberOfColumns());
         }
         System.out.println();
     }
@@ -125,11 +125,13 @@ public class ConsoleUI {
     }
 
     public void printQueryWhichItemToCheckOut() {
-        System.out.println("What would you like to check out?");
+        System.out.println("Please enter the title of the item you would like to check out.");
+        System.out.println(getPrompt());
     }
 
     public void printQueryWhichItemToReturn() {
-        System.out.println("What would you like to return?");
+        System.out.println("Please enter the title of the item you would like to return.");
+        System.out.println(getPrompt());
     }
 
     public void printInvalidItemMessage() {
@@ -141,11 +143,11 @@ public class ConsoleUI {
     }
 
     public void printItemReturnedMessage(LibraryItem item) {
-        System.out.println("Thank you for returning the" + item.getType() + ".");
+        System.out.println("Thank you for returning the " + item.toString() + ".");
     }
 
     public void printItemCheckedOutMessage(LibraryItem item) {
-        System.out.println("Thank you! Enjoy the " + item.getType() + ".");
+        System.out.println("Thank you! Enjoy the " + item.toString() + ".");
     }
 
     private String getColumnJustifier(int justifierLength) {
@@ -159,22 +161,5 @@ public class ConsoleUI {
     private String removeLastCharacter(String stringToShorten) {
         return stringToShorten.substring(0, stringToShorten.length()-1);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
