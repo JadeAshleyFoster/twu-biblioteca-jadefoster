@@ -17,6 +17,7 @@ public class Book extends LibraryItem {
         columnHeaders.add("TITLE");
         columnHeaders.add("AUTHOR");
         columnHeaders.add("YEAR PUBLISHED");
+        columnHeaders.add("STATUS");
     }
 
     public static ArrayList<String> getColumnHeaders() {
@@ -27,16 +28,13 @@ public class Book extends LibraryItem {
         return columnHeaders.size();
     }
 
-    public ArrayList<String> getAllDetails() {
+    public ArrayList<String> getAllDetails(Loginable user) {
         ArrayList<String> allDetails = new ArrayList<String>();
         allDetails.add(title);
         allDetails.add(author);
         allDetails.add(year);
+        allDetails.add(available(user));
         return allDetails;
-    }
-
-    public String getAuthor() {
-        return author;
     }
 
     public String toString() {

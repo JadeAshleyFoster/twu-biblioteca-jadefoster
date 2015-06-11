@@ -17,20 +17,18 @@ public class Controller {
 
     public void go() {
         ui.printWelcome();
-
         Loginable user = loginUser();
         createMenuOptions(user);
-        runProgram(user);
+        executeUserRequests(user);
     }
 
-    private void runProgram(Loginable user) {
+    private void executeUserRequests(Loginable user) {
         ui.printMainMenu(menuOptions);
-
         boolean quit = false;
         while (!quit) {
             String userInput = scanner.nextLine().toLowerCase();
-            String processedInput = processInput(userInput, user);
-            if (processedInput.equals("quit")) {
+            String userRequest = processInput(userInput, user);
+            if (userRequest.equals("quit")) {
                 ui.printGoodBye();
                 scanner.close();
                 quit = true;
@@ -41,13 +39,15 @@ public class Controller {
         }
     }
 
-    public Loginable loginUser() {
+    private Loginable loginUser() {
         Loginable user = null;
         boolean loggedIn = false;
         while(!loggedIn) {
-            user = getLogInIDFromUser();
+            ui.printAskForLoginID();
+            user = library.isValidUserID(scanner.nextLine());
             if (user != null) {
-                loggedIn = getValidPasswordFromUser(user);
+                ui.printAskForPassword();
+                loggedIn = isCorrectPasswordFromUser(user, scanner.nextLine());
             }else {
                 ui.printIncorrectLoginIDMessage();
             }
@@ -55,10 +55,8 @@ public class Controller {
         return user;
     }
 
-    private boolean getValidPasswordFromUser(Loginable user) {
-        ui.printAskForPassword();
-        String userPassword = scanner.nextLine();
-        if (user.getPassword().equals(userPassword)) {
+    public boolean isCorrectPasswordFromUser(Loginable user, String input) {
+        if (user.getPassword().equals(input)) {
             ui.printSuccessfulLogin();
             return true;
         } else {
@@ -67,119 +65,88 @@ public class Controller {
         return false;
     }
 
-    private Loginable getLogInIDFromUser() {
-        ui.printAskForLoginID();
-        String userLoginId = scanner.nextLine();
-        return library.isValidUserID(userLoginId);
-    }
-
-    private void createMenuOptions(Loginable user) {
+    public void createMenuOptions(Loginable user) {
         menuOptions = new ArrayList<String>();
         menuOptions.add("List Books");
         menuOptions.add("List Movies");
-        menuOptions.add("Check Out a Book");
-        menuOptions.add("Check Out a Movie");
-        menuOptions.add("Return a Book");
-        menuOptions.add("Return a Movie");
+        menuOptions.add("Check Out an Item");
+        menuOptions.add("Return an Item");
         if (user.isLibrarian()) {
             menuOptions.add("List Checked Out Books");
             menuOptions.add("List Checked Out Movies");
         }
+        menuOptions.add("User Information");
         menuOptions.add("Quit");
     }
 
     public String processInput(String input, Loginable user) {
         if (input.equals("list books")) {
-            ui.printTableOfBooks(library.getBooks());
+            ui.printTableOfBooks(library.getAll("book"), user);
             return input;
         } else if (input.equals("list movies")) {
-            ui.printTableOfMovies(library.getMovies());
+            ui.printTableOfMovies(library.getAll("movie"), user);
             return input;
         } else if (input.equals("quit")) {
             return input;
-        } else if (input.equals("check out a book")) {
-            ui.printQueryWhichItemToCheckOut();
-            checkOutABook(scanner.nextLine().toLowerCase());
+        } else if (input.equals("user information")) {
+            ui.printUserInformation(user);
             return input;
-        } else if(input.equals("check out a movie")) {
-            ui.printQueryWhichItemToCheckOut();
-            checkOutAMovie(scanner.nextLine().toLowerCase());
+        } else if (input.equals("check out an item")) {
+            ui.printAskForPassword();
+            if (isCorrectPasswordFromUser(user, scanner.nextLine())) {
+                ui.printQueryWhichItemToCheckOut();
+                checkOutAnItem(scanner.nextLine().toLowerCase(), user);
+            }
             return input;
-        } else if (input.equals("return a book")) {
-            ui.printQueryWhichItemToReturn();
-            returnABook(scanner.nextLine().toLowerCase());
+        } else if (input.equals("return an item")) {
+            ui.printAskForPassword();
+            if (isCorrectPasswordFromUser(user, scanner.nextLine())) {
+                ui.printQueryWhichItemToReturn();
+                returnAnItem(scanner.nextLine().toLowerCase());
+            }
             return input;
         } else {
             if (user.isLibrarian()) {
-                return processLibrarianOnlyInput(input);
+                return processLibrarianOnlyInput(input, user);
             }
             ui.printInvalidMenuOptionMessage();
             return "invalid option";
         }
     }
 
-    private String processLibrarianOnlyInput(String input) {
-        if (input.equals("List Checked Out Books")) {
-            ui.printTableOfBooks(library.getCheckedOutBooks());
-        } else if (input.equals("List Checked Out Movies")) {
-            ui.printTableOfMovies(library.getCheckedOutMovies());
+    private String processLibrarianOnlyInput(String input, Loginable user) {
+        if (input.equals("list checked out books")) {
+            ui.printTableOfBooks(library.getCheckedOut("book"), user);
+        } else if (input.equals("list checked out movies")) {
+            ui.printTableOfMovies(library.getCheckedOut("movie"), user);
+        } else {
+            ui.printInvalidMenuOptionMessage();
+            return "invalid option";
         }
         return input;
     }
 
 
-    private LibraryItem checkItemIsInList(String input, ArrayList<? extends LibraryItem> libraryItems) {
-        for (LibraryItem item:libraryItems) {
-            if (item.getTitle().toLowerCase().equals(input)) {
-                return item;
-            }
-        }
-        return null;
-    }
-
-
-    public Book checkOutABook(String input) {
-        Book bookToCheckOut = (Book) checkItemIsInList(input, library.getBooks());
-        if (bookToCheckOut == null) {
+    public LibraryItem checkOutAnItem(String input, Loginable user) {
+        LibraryItem itemToCheckOut = library.isALibraryItem(input);
+        if (itemToCheckOut == null) {
             ui.printInvalidItemMessage();
         } else {
-            library.checkOutBook(bookToCheckOut);
-            ui.printItemCheckedOutMessage(bookToCheckOut);
+            library.checkOutItem(itemToCheckOut, user);
+            ui.printItemCheckedOutMessage(itemToCheckOut);
         }
-        return bookToCheckOut;
+        return itemToCheckOut;
     }
 
-    public Movie checkOutAMovie(String input) {
-        Movie movieToCheckOut = (Movie) checkItemIsInList(input, library.getMovies());
-        if (movieToCheckOut == null) {
-            ui.printInvalidItemMessage();
-        } else {
-            library.checkOutMovie(movieToCheckOut);
-            ui.printItemCheckedOutMessage(movieToCheckOut);
-        }
-        return movieToCheckOut;
-    }
-
-    public Book returnABook(String input) {
-        Book bookToReturn = (Book) checkItemIsInList(input, library.getCheckedOutBooks());
-        if (bookToReturn == null) {
+    public LibraryItem returnAnItem(String input) {
+        LibraryItem itemToReturn = library.isALibraryItem(input);
+        if (itemToReturn == null) {
             ui.printInvalidItemToReturnMessage();
         } else {
-            library.returnBook(bookToReturn);
-            ui.printItemReturnedMessage(bookToReturn);
+            library.returnItem(itemToReturn);
+            ui.printItemReturnedMessage(itemToReturn);
         }
-        return bookToReturn;
-    }
-
-    public Movie returnAMovie(String input) {
-        Movie movieToReturn = (Movie) checkItemIsInList(input, library.getCheckedOutMovies());
-        if (movieToReturn == null) {
-            ui.printInvalidItemToReturnMessage();
-        } else {
-            library.returnMovie(movieToReturn);
-            ui.printItemReturnedMessage(movieToReturn);
-        }
-        return movieToReturn;
+        return itemToReturn;
     }
 
     public ArrayList<String> getMenuOptions() {

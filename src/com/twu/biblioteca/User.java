@@ -3,27 +3,28 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 
 public class User extends Loginable {
-    private ArrayList<LibraryItem> checkedOutItems;
+    private String name, email, phoneNumber;
 
-    public User(String ID, String password) {
+    public User(String ID, String password, String name, String email, String phoneNumber) {
         super(ID, password);
-        checkedOutItems = new ArrayList<LibraryItem>();
-    }
-
-    public ArrayList<LibraryItem> getCheckedOutItems() {
-        return checkedOutItems;
-    }
-
-    public void checkOutItem(LibraryItem item) {
-        checkedOutItems.add(item);
-    }
-
-    public void returnItem(LibraryItem item) {
-        checkedOutItems.remove(item);
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     public boolean isLibrarian() {
         return false;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
 }

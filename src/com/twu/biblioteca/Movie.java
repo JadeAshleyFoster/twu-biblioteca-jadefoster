@@ -20,6 +20,7 @@ public class Movie extends LibraryItem{
         columnHeaders.add("YEAR");
         columnHeaders.add("DIRECTOR");
         columnHeaders.add("RATING");
+        columnHeaders.add("STATUS");
     }
 
     public static ArrayList<String> getColumnHeaders() {
@@ -30,26 +31,19 @@ public class Movie extends LibraryItem{
         return columnHeaders.size();
     }
 
-    public ArrayList<String> getAllDetails() {
+    public ArrayList<String> getAllDetails(Loginable user) {
         ArrayList<String> allDetails = new ArrayList<String>();
         allDetails.add(title);
         allDetails.add(year);
         allDetails.add(director);
         allDetails.add(rating);
+        allDetails.add(available(user));
         return allDetails;
-    }
-
-    public String getRating() {
-        return rating;
-    }
-
-
-    public String getDirector() {
-        return director;
     }
 
     public String toString() {
         return "movie";
     }
+
 
 }

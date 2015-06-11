@@ -4,6 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
+
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,17 +12,22 @@ import static org.junit.Assert.assertFalse;
 public class ControllerTest {
     private Controller testController;
     private User testUser;
-    private Library library;
+    private Library testLibrary;
+    private Book testBook;
+    private Movie testMovie;
 
 
     @Before
     public void setUp() {
-        library = new Library();
-        testUser = (User) library.getLoginableMembers().get(0);
-        testController = new Controller(library);
+        testLibrary = new Library();
+        testUser = new User("123-4567", "IAmCool", "Dave Smith", "davesmith@something.com", "00123456789");
+        testMovie = new Movie("Akira", "1988", "Katsuhiro Otomo", "8");
+        testBook = new Book("Perdido Street Station", "China Mieville", "2000");
+        testLibrary.addItem(testBook);
+        testLibrary.addItem(testMovie);
+        testLibrary.addUser(testUser);
+        testController = new Controller(testLibrary);
     }
-
-    //TODO: Test check out/return a movie or book input...
 
     @Test
     public void testUserInputListBooks() throws Exception {
@@ -47,68 +53,44 @@ public class ControllerTest {
         assertEquals("quit", output);
     }
 
-
     @Test
-    public void testCheckOutABook() throws Exception {
-        String input = "snow crash";
-        Book bookToCheckOut = testController.checkOutABook(input);
-        assertFalse(library.getBooks().contains(bookToCheckOut));
-        assertTrue(library.getCheckedOutBooks().contains(bookToCheckOut));
+    public void testEnterValidPassword() {
+        assertTrue(testController.isCorrectPasswordFromUser(testUser, "IAmCool"));
     }
 
     @Test
-    public void testInvalidCheckOutBook() throws Exception {
-        String input = "2+2=5";
-        Book invalidBook = testController.checkOutABook(input);
-        assertFalse(library.getCheckedOutBooks().contains(invalidBook));
+    public void testEnterInvalidPassword() {
+        assertFalse(testController.isCorrectPasswordFromUser(testUser, "IAMNOTCOOL"));
+    }
+
+    @Test
+    public void testCheckOutABook() throws Exception {
+        String input = "perdido street station";
+        LibraryItem bookToCheckOut = testController.checkOutAnItem(input, testUser);
+        assertTrue(bookToCheckOut.isCheckedOut());
     }
 
     @Test
     public void testReturnABook() throws Exception {
-        String input = "the nature of code";
-        testController.checkOutABook(input);
-        Book bookToReturn = testController.returnABook(input);
-        assertFalse(library.getCheckedOutBooks().contains(bookToReturn));
-        assertTrue(library.getBooks().contains(bookToReturn));
-    }
-
-    @Test
-    public void testInvalidReturnBook() throws Exception {
-        String input = "finkleburger";
-        Book invalidItem = testController.returnABook(input);
-        assertFalse(library.getBooks().contains(invalidItem));
+        String input = "perdido street station";
+        testController.checkOutAnItem(input, testUser);
+        LibraryItem bookToReturn = testController.returnAnItem(input);
+        assertFalse(testLibrary.getCheckedOut("book").contains(bookToReturn));
     }
 
     @Test
     public void testCheckOutAMovie() throws Exception {
-        String input = "planet terror";
-        Movie movieToCheckOut = testController.checkOutAMovie(input);
-        assertFalse(library.getMovies().contains(movieToCheckOut));
-        assertTrue(library.getCheckedOutMovies().contains(movieToCheckOut));
-    }
-
-    @Test
-    public void testInvalidCheckOutMovie() throws Exception {
-        String input = "harry potter and the donkey from Aldgate";
-        Movie invalidMovie = testController.checkOutAMovie(input);
-        assertFalse(library.getCheckedOutMovies().contains(invalidMovie));
+        String input = "akira";
+        LibraryItem movieToCheckOut = testController.checkOutAnItem(input, testUser);
+        assertTrue(movieToCheckOut.isCheckedOut());
     }
 
     @Test
     public void testReturnAMovie() throws Exception {
-        String input = "planet terror";
-        testController.checkOutAMovie(input);
-        Movie movieToReturn = testController.returnAMovie(input);
-        assertFalse(library.getCheckedOutMovies().contains(movieToReturn));
-        assertTrue(library.getMovies().contains(movieToReturn));
+        String input = "akira";
+        testController.checkOutAnItem(input, testUser);
+        LibraryItem movieToReturn = testController.returnAnItem(input);
+        assertFalse(testLibrary.getCheckedOut("movie").contains(movieToReturn));
     }
-
-    @Test
-    public void testInvalidReturnMovie() throws Exception {
-        String input = "fghfbg,fbg,fd";
-        Movie invalidItem = testController.returnAMovie(input);
-        assertFalse(library.getMovies().contains(invalidItem));
-    }
-
 
 }

@@ -3,122 +3,172 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 
 public class ConsoleUI {
-    private static final int MAX_DETAIL_LENGTH = 23;
+    private static final int MAX_DETAIL_LENGTH = 26;
 
-    public void printWelcome() {
-        System.out.println(getWelcomeMessage());
+    public String printWelcome() {
+        String toPrint = "Welcome to Biblioteca!\n";
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-    public String getWelcomeMessage() {
-        return "Welcome to Biblioteca!\n";
+    public String printAskForLoginID() {
+        String toPrint = "Please enter your library number:\n" + getPrompt();
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-    public void printAskForLoginID() {
-        System.out.println(getAskForLoginID());
+    public String printAskForPassword() {
+        String toPrint = "Please enter your password:\n" + getPrompt();
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-    public void printAskForPassword() {
-        System.out.println(getAskForPassword());
+    public String printIncorrectPasswordMessage() {
+        String toPrint = "That password is incorrect.";
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-    public void printIncorrectPasswordMessage() {
-        System.out.println("That password is incorrect.\n");
+    public String printSuccessfulLogin() {
+        String toPrint = "Successful login.\n";
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-    public void printSuccessfulLogin() {
-        System.out.println("Successful login.\n");
+    public String printIncorrectLoginIDMessage() {
+        String toPrint = "That is not a valid library number. A library number is in the format XXX-XXXX.\n";
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-
-    public String getAskForLoginID() {
-        return "Please enter your library number to login.\n" + getPrompt();
-    }
-
-    public void printIncorrectLoginIDMessage() {
-        System.out.println("That is not a valid library number. A library number is in the format XXX-XXXX.\n");
-    }
-
-    public String getAskForPassword() {
-        return "Please enter your password.\n" + getPrompt();
-    }
-
-    public void printMainMenu(ArrayList<String> menuOptions) {
-        System.out.println(getMainMenu(menuOptions));
-        System.out.println("Please enter and option.\n" + getPrompt());
-    }
-
-    public String getMainMenu(ArrayList<String> menuOptions) {
+    public String printMainMenu(ArrayList<String> menuOptions) {
         String mainMenu = "Main Menu:\t-\t";
         for (String option:menuOptions) {
             mainMenu += option + "\t-\t";
         }
-        return mainMenu;
+        String toPrint = "\n" + mainMenu + "\nPlease enter an option.\n" + getPrompt();
+        System.out.println(toPrint);
+        return toPrint;
+
     }
 
-    public String getPrompt() {
+    private String getPrompt() {
         return "...>";
     }
 
-    public void printTableOfBooks(ArrayList<Book> books) {
-        System.out.println();
-        printTableLine(Book.getNumberOfColumns());
-        printTableHeaders(Book.getColumnHeaders());
-        printTableLine(Book.getNumberOfColumns());
+    public String printInvalidMenuOptionMessage() {
+        String toPrint = "Sorry that is not a valid option. Please choose another.\n";
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printGoodBye() {
+        String toPrint = "Thank you for using Biblioteca, goodbye.";
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printQueryWhichItemToCheckOut() {
+        String toPrint = "Please enter the title of the item you would like to check out.\n" + getPrompt();
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printQueryWhichItemToReturn() {
+        String toPrint = "Please enter the title of the item you would like to return.\n" + getPrompt();
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printInvalidItemMessage() {
+        String toPrint = "That item is not available.";
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printInvalidItemToReturnMessage() {
+        String toPrint = "That is not a valid item to return.";
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printItemReturnedMessage(LibraryItem item) {
+        String toPrint = "Thank you for returning the " + item.toString() + ".";
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printItemCheckedOutMessage(LibraryItem item) {
+        String toPrint = "Thank you! Enjoy the " + item.toString() + ".";
+        System.out.println(toPrint);
+        return toPrint;
+    }
+
+    public String printUserInformation(Loginable user) {
+        String toPrint = "";
+        if (user.isLibrarian()) {
+            toPrint = "No Information available for librarian user.";
+        } else {
+            User userX = (User) user;
+            toPrint = "\nName: " + userX.getName() + "\ne-mail: " + userX.getEmail() + "\nPhone: " + userX.getPhoneNumber();
+        }
+        return toPrint;
+    }
+
+    public String printTableOfBooks(ArrayList<LibraryItem> books, Loginable user) {
+        String toPrint = "";
+        toPrint += getTableLine(Book.getNumberOfColumns());
+        toPrint += getTableHeaders(Book.getColumnHeaders());
+        toPrint += getTableLine(Book.getNumberOfColumns());
         if(!books.isEmpty()) {
-            printTableItems(books);
-            printTableLine(Book.getNumberOfColumns());
+            toPrint += getTableItems(books, user);
+            toPrint += getTableLine(Book.getNumberOfColumns());
         }
-        System.out.println();
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-    public void printTableOfMovies(ArrayList<Movie> movies) {
-        System.out.println();
-        printTableLine(Movie.getNumberOfColumns());
-        printTableHeaders(Movie.getColumnHeaders());
-        printTableLine(Movie.getNumberOfColumns());
+    public String printTableOfMovies(ArrayList<LibraryItem> movies, Loginable user) {
+        String toPrint = "";
+        toPrint += getTableLine(Movie.getNumberOfColumns());
+        toPrint += getTableHeaders(Movie.getColumnHeaders());
+        toPrint += getTableLine(Movie.getNumberOfColumns());
         if(!movies.isEmpty()) {
-            printTableItems(movies);
-            printTableLine(Movie.getNumberOfColumns());
+            toPrint += getTableItems(movies, user);
+            toPrint += getTableLine(Movie.getNumberOfColumns());
         }
-        System.out.println();
+        System.out.println(toPrint);
+        return toPrint;
     }
 
-    private void printTableLine(int columns) {
-        String column = "##########################";
+    private String getTableLine(int columns) {
+        String column = "#############################";
         String tableLine = "";
         for (int i = 0; i < columns; i++) {
             tableLine += column;
         }
-        System.out.println(tableLine + "#");
+        return tableLine + "#\n";
     }
 
-    private void printTableHeaders(ArrayList<String> headers) {
-        System.out.println(getFormattedHeaders(headers));
-    }
-
-    public String getFormattedHeaders(ArrayList<String> headers) {
+    private String getTableHeaders(ArrayList<String> headers) {
         String formattedHeaders = "#";
         for (String header:headers) {
             formattedHeaders += " " + formatDetail(header) + "#";
         }
-        return formattedHeaders;
+        return formattedHeaders + "\n";
     }
 
-    private void printTableItems(ArrayList<? extends LibraryItem> items) {
-        System.out.println(getFormattedListOfItems(items));
-    }
-
-    public String getFormattedListOfItems(ArrayList<? extends LibraryItem> libraryItems) {
+    private String getTableItems(ArrayList<? extends LibraryItem> items, Loginable user) {
         String formattedItemsList = "";
-        for (LibraryItem item:libraryItems) {
-            formattedItemsList += getFormattedItemDetails(item) + "\n";
+        for (LibraryItem item:items) {
+            formattedItemsList += getFormattedItemDetails(item, user) + "\n";
         }
-        return removeLastCharacter(formattedItemsList);
+        return formattedItemsList;
     }
 
-    private String getFormattedItemDetails(LibraryItem item) {
+    private String getFormattedItemDetails(LibraryItem item, Loginable user) {
         String formattedItemDetails = "#";
-        for (String detail:item.getAllDetails()) {
+        for (String detail:item.getAllDetails(user)) {
             formattedItemDetails += " " + formatDetail(detail) + "#";
         }
         return formattedItemDetails;
@@ -139,43 +189,8 @@ public class ConsoleUI {
         return detail.substring(0, MAX_DETAIL_LENGTH - 3) + "...";
     }
 
-
     private String addJustifierToDetail(String detail) {
         return detail + getColumnJustifier(MAX_DETAIL_LENGTH - detail.length() + 1);
-    }
-
-    public void printInvalidMenuOptionMessage() {
-        System.out.println("Sorry that is not a valid option. Please choose another.\n");
-    }
-
-    public void printGoodBye() {
-        System.out.println("Thank you for using Biblioteca, goodbye.");
-    }
-
-    public void printQueryWhichItemToCheckOut() {
-        System.out.println("Please enter the title of the item you would like to check out.");
-        System.out.println(getPrompt());
-    }
-
-    public void printQueryWhichItemToReturn() {
-        System.out.println("Please enter the title of the item you would like to return.");
-        System.out.println(getPrompt());
-    }
-
-    public void printInvalidItemMessage() {
-        System.out.println("That item is not available.");
-    }
-
-    public void printInvalidItemToReturnMessage() {
-        System.out.println("That is not a valid item to return.");
-    }
-
-    public void printItemReturnedMessage(LibraryItem item) {
-        System.out.println("Thank you for returning the " + item.toString() + ".");
-    }
-
-    public void printItemCheckedOutMessage(LibraryItem item) {
-        System.out.println("Thank you! Enjoy the " + item.toString() + ".");
     }
 
     private String getColumnJustifier(int justifierLength) {
@@ -184,10 +199,6 @@ public class ConsoleUI {
             justifier += " ";
         }
         return justifier;
-    }
-
-    private String removeLastCharacter(String stringToShorten) {
-        return stringToShorten.substring(0, stringToShorten.length()-1);
     }
 
 }

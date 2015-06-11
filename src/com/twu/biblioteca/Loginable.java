@@ -4,7 +4,8 @@ public abstract class Loginable {
     private String ID, password;
 
     public Loginable(String ID, String password) {
-
+        this.ID = ID;
+        this.password = password;
     }
 
     public String getID() {
