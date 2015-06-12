@@ -23,20 +23,22 @@ public class Controller {
     }
 
     private void executeUserRequests(Loginable user) {
-        ui.printMainMenu(menuOptions);
         boolean quit = false;
         while (!quit) {
+            ui.printMainMenu(menuOptions);
             String userInput = scanner.nextLine().toLowerCase();
             String userRequest = processInput(userInput, user);
-            if (userRequest.equals("quit")) {
-                ui.printGoodBye();
-                scanner.close();
-                quit = true;
-            } else {
-                System.out.println();
-                ui.printMainMenu(menuOptions);
-            }
+            quit = wantToQuit(userRequest);
         }
+    }
+
+    private boolean wantToQuit(String request) {
+        if (request.equals("quit")) {
+            ui.printGoodBye();
+            scanner.close();
+            return true;
+        }
+        return false;
     }
 
     private Loginable loginUser() {
