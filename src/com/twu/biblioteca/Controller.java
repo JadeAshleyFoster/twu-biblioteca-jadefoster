@@ -86,16 +86,10 @@ public class Controller {
             ui.printTableOfBooks(library.getAll(input.substring(5, input.length()-1)), user);
             return input;
         } else if (input.equals("check out an item")) {
-            if (getPasswordFromUser(user)) {
-                ui.printQueryWhichItemToCheckOut();
-                checkOutAnItemFromTheLibrary(scanner.nextLine().toLowerCase(), user);
-            }
+            userWantsToCheckOutAnItem(user);
             return input;
         } else if (input.equals("return an item")) {
-            if (getPasswordFromUser(user)) {
-                ui.printQueryWhichItemToReturn();
-                returnAnItemToTheLibrary(scanner.nextLine().toLowerCase());
-            }
+            userWantsToReturnAnItem(user);
             return input;
         } else if (input.equals("user information")) {
             ui.printUserInformation(user);
@@ -108,6 +102,20 @@ public class Controller {
             }
             ui.printInvalidMenuOptionMessage();
             return "invalid option";
+        }
+    }
+
+    private void userWantsToCheckOutAnItem(Loginable user) {
+        if (getPasswordFromUser(user)) {
+            ui.printQueryWhichItemToCheckOut();
+            checkOutAnItemFromTheLibrary(getUserInput().toLowerCase(), user);
+        }
+    }
+
+    private void userWantsToReturnAnItem(Loginable user) {
+        if (getPasswordFromUser(user)) {
+            ui.printQueryWhichItemToReturn();
+            returnAnItemToTheLibrary(getUserInput().toLowerCase());
         }
     }
 
