@@ -66,30 +66,30 @@ public class ControllerTest {
     @Test
     public void testCheckOutABook() throws Exception {
         String input = "perdido street station";
-        LibraryItem bookToCheckOut = testController.checkOutAnItem(input, testUser);
+        LibraryItem bookToCheckOut = testController.checkOutAnItemFromTheLibrary(input, testUser);
         assertTrue(bookToCheckOut.isCheckedOut());
     }
 
     @Test
     public void testReturnABook() throws Exception {
         String input = "perdido street station";
-        testController.checkOutAnItem(input, testUser);
-        LibraryItem bookToReturn = testController.returnAnItem(input);
+        testController.checkOutAnItemFromTheLibrary(input, testUser);
+        LibraryItem bookToReturn = testController.returnAnItemToTheLibrary(input);
         assertFalse(testLibrary.getCheckedOut("book").contains(bookToReturn));
     }
 
     @Test
     public void testCheckOutAMovie() throws Exception {
         String input = "akira";
-        LibraryItem movieToCheckOut = testController.checkOutAnItem(input, testUser);
+        LibraryItem movieToCheckOut = testController.checkOutAnItemFromTheLibrary(input, testUser);
         assertTrue(movieToCheckOut.isCheckedOut());
     }
 
     @Test
     public void testReturnAMovie() throws Exception {
         String input = "akira";
-        testController.checkOutAnItem(input, testUser);
-        LibraryItem movieToReturn = testController.returnAnItem(input);
+        testController.checkOutAnItemFromTheLibrary(input, testUser);
+        LibraryItem movieToReturn = testController.returnAnItemToTheLibrary(input);
         assertFalse(testLibrary.getCheckedOut("movie").contains(movieToReturn));
     }
 
