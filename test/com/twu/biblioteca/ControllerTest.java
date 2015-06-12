@@ -48,9 +48,17 @@ public class ControllerTest {
     }
 
     @Test
-    public void testQuit() throws Exception {
+    public void testprocessInputQuit() throws Exception {
         String output = testController.processInput("quit", testUser);
         assertEquals("quit", output);
+    }
+
+    @Test
+    public void testWantToQuit() throws Exception {
+        boolean output = testController.wantToQuit("quit");
+        assertTrue(output);
+        boolean output2 = testController.wantToQuit("fjgkfjdhghdf");
+        assertFalse(output2);
     }
 
     @Test

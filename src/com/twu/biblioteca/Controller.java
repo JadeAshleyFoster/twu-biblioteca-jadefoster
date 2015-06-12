@@ -59,7 +59,7 @@ public class Controller {
         return scanner.nextLine();
     }
 
-    private boolean wantToQuit(String request) {
+    public boolean wantToQuit(String request) {
         if (request.equals("quit")) {
             shutDown();
             return true;
@@ -120,17 +120,13 @@ public class Controller {
     }
 
     private String processLibrarianOnlyInput(String input, Loginable user) {
-        if (input.equals("list checked out books")) {
-            ui.printTableOfBooks(library.getCheckedOut("book"), user);
-        } else if (input.equals("list checked out movies")) {
-            ui.printTableOfMovies(library.getCheckedOut("movie"), user);
-        } else {
-            ui.printInvalidMenuOptionMessage();
-            return "invalid option";
+        if (input.equals("list checked out books") || (input.equals("list checked out movies"))) {
+            ui.printTableOfBooks(library.getCheckedOut(input.substring(17, input.length()-1)), user);
+            return input;
         }
-        return input;
+        ui.printInvalidMenuOptionMessage();
+        return "invalid option";
     }
-
 
     public LibraryItem checkOutAnItemFromTheLibrary(String input, Loginable user) {
         LibraryItem itemToCheckOut = library.isALibraryItem(input);
