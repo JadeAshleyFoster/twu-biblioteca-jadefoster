@@ -85,24 +85,22 @@ public class Controller {
         if (input.equals("list books") || input.equals("list movies")) {
             ui.printTableOfBooks(library.getAll(input.substring(5, input.length()-1)), user);
             return input;
-        } else if (input.equals("quit")) {
-            return input;
-        } else if (input.equals("user information")) {
-            ui.printUserInformation(user);
-            return input;
         } else if (input.equals("check out an item")) {
-            ui.printAskForPassword();
-            if (isCorrectPasswordFromUser(user, scanner.nextLine())) {
+            if (getPasswordFromUser(user)) {
                 ui.printQueryWhichItemToCheckOut();
                 checkOutAnItemFromTheLibrary(scanner.nextLine().toLowerCase(), user);
             }
             return input;
         } else if (input.equals("return an item")) {
-            ui.printAskForPassword();
-            if (isCorrectPasswordFromUser(user, scanner.nextLine())) {
+            if (getPasswordFromUser(user)) {
                 ui.printQueryWhichItemToReturn();
                 returnAnItemToTheLibrary(scanner.nextLine().toLowerCase());
             }
+            return input;
+        } else if (input.equals("user information")) {
+            ui.printUserInformation(user);
+            return input;
+        } else if (input.equals("quit")) {
             return input;
         } else {
             if (user.isLibrarian()) {
