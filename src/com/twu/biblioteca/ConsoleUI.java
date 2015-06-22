@@ -112,6 +112,7 @@ public class ConsoleUI {
             User userX = (User) user;
             toPrint = "\nName: " + userX.getName() + "\ne-mail: " + userX.getEmail() + "\nPhone: " + userX.getPhoneNumber();
         }
+        System.out.println(toPrint);
         return toPrint;
     }
 

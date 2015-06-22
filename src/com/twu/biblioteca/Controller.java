@@ -82,8 +82,11 @@ public class Controller {
     }
 
     public String processInput(String input, Loginable user) {
-        if (input.equals("list books") || input.equals("list movies")) {
-            ui.printTableOfBooks(library.getAll(input.substring(5, input.length()-1)), user);
+        if (input.equals("list books")) {
+            ui.printTableOfBooks(library.getAll("book"), user);
+            return input;
+        } else if (input.equals("list movies")) {
+            ui.printTableOfMovies(library.getAll("movie"), user);
             return input;
         } else if (input.equals("check out an item")) {
             userWantsToCheckOutAnItem(user);
